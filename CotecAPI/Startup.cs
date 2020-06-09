@@ -22,13 +22,23 @@ namespace CotecAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Customize our CORS policy
+            // Use [EnableCors("CORS_POLICY")] in each Controller
+            services.AddCors(o => o.AddPolicy(
+                "CORS_POLICY", 
+                builder => {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                }));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
