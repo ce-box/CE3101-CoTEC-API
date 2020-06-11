@@ -28,7 +28,6 @@ namespace CotecAPI
             services.AddControllers();
 
             // Customize our CORS policy
-            // Use [EnableCors("CORS_POLICY")] in each Controller
             services.AddCors(o => o.AddPolicy(
                 "CORS_POLICY", 
                 builder => {
@@ -36,6 +35,9 @@ namespace CotecAPI
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 }));
+
+            
+            // TODO: Agregar las Inyecciones de Dependencias
         }
 
         
@@ -45,6 +47,9 @@ namespace CotecAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Apply CORS Policy to every request
+            app.UseCors("CORS_POLICY");
 
             app.UseHttpsRedirection();
 
