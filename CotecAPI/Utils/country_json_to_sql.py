@@ -1,6 +1,6 @@
 import json
 
-with open('CotecAPI\Resources\countries.json') as f:
+with open('CotecAPI\Utils\countries.json') as f:
     cty_json = json.load(f)
     cty_json = cty_json["data"]
     

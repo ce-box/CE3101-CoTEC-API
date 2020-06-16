@@ -2,7 +2,7 @@
 create database cotecDB;
 
 -- Database Tables
-use cotecDB;
+-- use cotecDB;
 
 -- These databases cannot be edited by the users
 
@@ -68,7 +68,7 @@ create table CountryMeasurements (
 
 -- Hospital Tables
 
-create table Hospital(
+create table Hospitals(
 	
 	Id int identity(1,1) primary key,
 	Name varchar(255) NOT NULL,
@@ -104,7 +104,8 @@ create table Patients (
 	Name varchar(20) NOT NULL,
 	LastName varchar(20) NOT NULL,
 	Birthdate date NOT NULL,
-	StatusId int foreign key references PatientStatus(Id),
+	StatusId int foreign key references PatientStatus(Id) NOT NULL,
+	HospitalId int foreign key references Hospitals(Id),
 	Hospitalized bit NOT NULL default 0,
 	ICU bit NOT NULL default 0,
 	Region varchar(50) NOT NULL,
@@ -112,4 +113,37 @@ create table Patients (
 	foreign key (Region, Country) references Regions(Name, CountryCode)
 );
 
--- Quedé haciendo las tablas de relacion entre Pacientes y medicamento y patologías
+-- Medications by Patient
+create table PatientMedications (
+	PatientDni varchar(30) foreign key references Patients(Dni),
+	MedicationId int foreign key references Medications(Id),
+	Prescription varchar(100),
+	primary key(PatientDni,MedicationId)
+);
+
+-- Pathologies by Patient
+create table PatientPathologies (
+	PatientDni varchar(30) foreign key references Patients(Dni),
+	Pathology varchar(255) foreign key references Pathologies(Name),
+	primary key(PatientDni,Pathology)
+);
+
+-- ContactedPerson
+create table ContactedPersons (
+	Dni varchar(30) primary key,
+	Name varchar(20) NOT NULL,
+	LastName varchar(20) NOT NULL,
+	Birthdate date NOT NULL,
+	Email varchar(60) NOT NULL,
+	Region varchar(50) NOT NULL,
+	Country varchar(3) NOT NULL,
+	foreign key (Region, Country) references Regions(Name, CountryCode)
+);
+
+-- ContactedPerson by Patient
+create table PersonsContactedByPatients (
+	PatientDni varchar(30) foreign key references Patients(Dni),
+	ContactDni varchar(30) foreign key references ContactedPersons(Dni),
+	MeetingDate date,
+	primary key(PatientDni, ContactDni)
+);
