@@ -8,10 +8,6 @@ namespace CotecAPI.Models
         public string LastName { get; set; }
 
 
-        // FK, references Country.Code
-        public string CountryCode { get; set; }
-        public virtual Country Country { get; set; }
-
         // FK, references Hospital.Id
         public int Hospital_Id { get; set; }
         public virtual Hospital Hospital { get; set; }

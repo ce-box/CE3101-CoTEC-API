@@ -14,9 +14,8 @@ namespace CotecAPI.Models
         public virtual Continent Continent { get;set; }
 
 
-        // One-to-many relationship
+        // One-to-many relationships
         public virtual ICollection<Region> Regions { get;set; }
         public virtual ICollection<Admin> Admins { get; set; }
-        public virtual ICollection<HospitalEmployee> HEmployees { get; set; }
     }
 }
