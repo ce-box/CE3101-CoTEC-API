@@ -17,5 +17,8 @@ namespace CotecAPI.Models
         // One-to-many relationships
         public virtual ICollection<Region> Regions { get;set; }
         public virtual ICollection<Admin> Admins { get; set; }
+
+        // Many-to-many relationships
+        public virtual ICollection<CountrySanitaryMeasures> ImplementedMeasures { get; set; }
     }
 }
