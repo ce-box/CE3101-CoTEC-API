@@ -16,5 +16,7 @@ namespace CotecAPI.Models
 
         // One-to-many relationship
         public virtual ICollection<Region> Regions { get;set; }
+        public virtual ICollection<Admin> Admins { get; set; }
+        public virtual ICollection<HospitalEmployee> HEmployees { get; set; }
     }
 }
