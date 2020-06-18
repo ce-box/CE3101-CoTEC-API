@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CotecAPI.Models
 {
@@ -7,7 +8,7 @@ namespace CotecAPI.Models
         public string Dni { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public string DoB { get; set; }
+        public DateTime DoB { get; set; }
         public string Email { get; set; }
 
         // One-to-many relationship

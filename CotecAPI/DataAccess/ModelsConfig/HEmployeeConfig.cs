@@ -38,6 +38,11 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasMaxLength(20)
                          .IsRequired();
 
+            // HospitalId
+            entityBuilder.Property(e => e.Hospital_Id)
+                         .HasColumnType("int")
+                         .IsRequired();
+
             // Foreign Key
             entityBuilder.HasOne<Hospital>(e => e.Hospital)
                          .WithMany(h => h.Employees)

@@ -4,7 +4,7 @@ namespace CotecAPI.Models
 {
     public class PersonsContactedByPatient
     {
-        public DateTime MeetingDate { get; set; }
+        public DateTime? MeetingDate { get; set; }
 
 
         // FKs of Many-to-Many relationships

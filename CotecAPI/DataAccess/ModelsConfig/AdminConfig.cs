@@ -38,6 +38,12 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasMaxLength(20)
                          .IsRequired();
 
+            // Admin CountryCode
+            entityBuilder.Property(a => a.CountryCode)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(3)
+                         .IsRequired();
+
             // Foreign Key
             entityBuilder.HasOne<Country>(a => a.Country)
                          .WithMany(ctry => ctry.Admins)

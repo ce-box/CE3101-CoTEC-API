@@ -46,6 +46,18 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasColumnType("int")
                          .IsRequired();
 
+            // Region Name
+            entityBuilder.Property(h => h.Region)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(50)
+                         .IsRequired();
+
+            // Country Code
+            entityBuilder.Property(h => h.Country)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(3)
+                         .IsRequired();
+
             // Foreign Key
             entityBuilder.HasOne<Region>(h => h.HRegion)
                          .WithMany(r=> r.Hospitals)

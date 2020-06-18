@@ -23,13 +23,20 @@ namespace CotecAPI.DataAccess.ModelsConfig
             // Country Name
             entityBuilder.Property(ctry => ctry.Name)
                          .HasColumnType("varchar")
-                         .HasMaxLength(50)
+                         .HasMaxLength(60)
                          .IsRequired();
 
             // Flag Url
             entityBuilder.Property(ctry => ctry.FlagUrl)
                          .HasColumnType("varchar")
                          .HasMaxLength(45);
+
+            // ContinentCode
+            entityBuilder.Property(ctry => ctry.ContinentCode)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(2)
+                         .IsRequired();
+
 
             // Foreign Key
             entityBuilder.HasOne<Continent>(ctry => ctry.Continent)

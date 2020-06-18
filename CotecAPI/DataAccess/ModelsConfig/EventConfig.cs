@@ -25,6 +25,12 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasColumnType("date")
                          .IsRequired();
 
+            // CountryCode
+            entityBuilder.Property(e => e.CountryCode)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(3)
+                         .IsRequired();
+
             // Foreign Key
             entityBuilder.HasOne<Country>(e => e.Country)
                          .WithMany(ctry => ctry.CountryEvents)

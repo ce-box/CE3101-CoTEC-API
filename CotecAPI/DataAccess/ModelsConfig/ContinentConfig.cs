@@ -12,7 +12,7 @@ namespace CotecAPI.DataAccess.ModelsConfig
             entityBuilder.ToTable("Continents");
             
             // Set Primary Key
-            entityBuilder.HasKey(cnt => cnt.Code); //PK
+            entityBuilder.HasKey(cnt => cnt.Code);
             
             // Continent Code
             entityBuilder.Property(cnt => cnt.Code)
@@ -26,7 +26,5 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasMaxLength(15)
                          .IsRequired();
         }
-
-
     }
 }

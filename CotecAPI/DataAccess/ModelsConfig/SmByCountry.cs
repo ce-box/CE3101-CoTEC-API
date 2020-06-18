@@ -30,6 +30,17 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasMaxLength(15)
                          .IsRequired();
 
+            // SM CountryCode
+            entityBuilder.Property(c => c.CountryCode)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(3)
+                         .IsRequired();
+
+            // SM MeasureId
+            entityBuilder.Property(c => c.MeasureId)
+                         .HasColumnType("int")
+                         .IsRequired();
+
             // Foreign Keys
             entityBuilder.HasOne<Country>(c => c.Country)
                          .WithMany(ctry => ctry.ImplementedSanitaryMeasures)

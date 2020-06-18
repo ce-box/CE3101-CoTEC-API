@@ -6,10 +6,10 @@ namespace CotecAPI.DataAccess.ModelsConfig
 {
     public class CmByCountry
     {
-        public static void SetEntityBuilder(EntityTypeBuilder<CountryContainmemtMeasures> entityBuilder)
+        public static void SetEntityBuilder(EntityTypeBuilder<CountryContainmentMeasures> entityBuilder)
         {   
             // Table Name
-            entityBuilder.ToTable("CountryContainmemtMeasures");
+            entityBuilder.ToTable("CountryContainmentMeasures");
 
             // Primary Key
             entityBuilder.HasKey(c => new{c.CountryCode,c.MeasureId});
@@ -30,9 +30,20 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasMaxLength(15)
                          .IsRequired();
 
+            // CM CountryCode
+            entityBuilder.Property(c => c.CountryCode)
+                         .HasColumnType("varchar")
+                         .HasMaxLength(3)
+                         .IsRequired();
+
+            // CM MeasureId
+            entityBuilder.Property(c => c.MeasureId)
+                         .HasColumnType("int")
+                         .IsRequired();
+
             // Foreign Keys
             entityBuilder.HasOne<Country>(c => c.Country)
-                         .WithMany(ctry => ctry.ImplementedContainmemtMeasures)
+                         .WithMany(ctry => ctry.ImplementedContainmentMeasures)
                          .HasForeignKey(c => c.CountryCode);
 
              entityBuilder.HasOne<ContainmentMeasure>(c => c.Measure)

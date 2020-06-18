@@ -22,6 +22,6 @@ namespace CotecAPI.Models
 
         // Many-to-many relationships
         public virtual ICollection<CountrySanitaryMeasures> ImplementedSanitaryMeasures { get; set; }
-        public virtual ICollection<CountryContainmemtMeasures> ImplementedContainmemtMeasures { get; set; }
+        public virtual ICollection<CountryContainmentMeasures> ImplementedContainmentMeasures { get; set; }
     }
 }
