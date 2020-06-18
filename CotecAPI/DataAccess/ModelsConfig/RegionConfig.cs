@@ -20,7 +20,6 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasMaxLength(50)
                          .IsRequired();
 
-    
             // Foreign Key
             entityBuilder.HasOne<Country>(r => r.Country)
                          .WithMany(ctry => ctry.Regions)
