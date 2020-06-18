@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CotecAPI.Data
+namespace CotecAPI.DataAccess.Repositories
 {
     public interface IRepository<T>
     {

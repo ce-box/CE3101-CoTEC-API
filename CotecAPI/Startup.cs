@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CotecAPI.DataAccess.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +28,12 @@ namespace CotecAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            // Add DbContexts
+            services.AddDbContext<CotecContext>(opt => opt.UseSqlServer
+                (Configuration.GetConnectionString("CotecConnection")));
 
             // Customize our CORS policy
-            // Use [EnableCors("CORS_POLICY")] in each Controller
             services.AddCors(o => o.AddPolicy(
                 "CORS_POLICY", 
                 builder => {
@@ -36,6 +41,9 @@ namespace CotecAPI
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 }));
+
+            
+            // TODO: Agregar las Inyecciones de Dependencias
         }
 
         
@@ -45,6 +53,9 @@ namespace CotecAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Apply CORS Policy to every request
+            app.UseCors("CORS_POLICY");
 
             app.UseHttpsRedirection();
 
