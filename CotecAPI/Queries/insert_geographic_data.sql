@@ -12,11 +12,11 @@
  * ------------------------------------*/
 
 -- Select DB
-use cotecDB;
+USE COTEC_DB;
 
--- Insert Continents
-insert into Continents (Name, Code)
-values ('Asia','AF'),
+-- INSERT Continents
+INSERT INTO Continents (Name, Code)
+VALUES ('Asia','AF'),
 	   ('Africa', 'AS'),
 	   ('Europe','EU'),
 	   ('North America','NA'),
@@ -24,9 +24,9 @@ values ('Asia','AF'),
 	   ('Oceania','OC'),
 	   ('Antartica','AN');
 
--- Insert African Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values  ('Algeria','DZA','AF','https://www.countryflags.io/DZ/flat/64.png'),
+-- INSERT African Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES  ('Algeria','DZA','AF','https://www.countryflags.io/DZ/flat/64.png'),
 		('Angola','AGO','AF','https://www.countryflags.io/AO/flat/64.png'),
 		('Botswana','BWA','AF','https://www.countryflags.io/BW/flat/64.png'),
 		('Burundi','BDI','AF','https://www.countryflags.io/BI/flat/64.png'),
@@ -85,9 +85,9 @@ values  ('Algeria','DZA','AF','https://www.countryflags.io/DZ/flat/64.png'),
 		('Burkina Faso','BFA','AF','https://www.countryflags.io/BF/flat/64.png'),
 		('Zambia','ZMB','AF','https://www.countryflags.io/ZM/flat/64.png');
 
--- Insert Asian Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values  ('Afghanistan','AFG','AS','https://www.countryflags.io/AF/flat/64.png'),
+-- INSERT Asian Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES  ('Afghanistan','AFG','AS','https://www.countryflags.io/AF/flat/64.png'),
 		('Bahrain','BHR','AS','https://www.countryflags.io/BH/flat/64.png'),
 		('Bangladesh','BGD','AS','https://www.countryflags.io/BD/flat/64.png'),
 		('Armenia','ARM','AS','https://www.countryflags.io/AM/flat/64.png'),
@@ -138,9 +138,9 @@ values  ('Afghanistan','AFG','AS','https://www.countryflags.io/AF/flat/64.png'),
 		('Uzbekistan','UZB','AS','https://www.countryflags.io/UZ/flat/64.png'),
 		('Yemen','YEM','AS','https://www.countryflags.io/YE/flat/64.png');
 
--- Insert European Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values ('Albania','ALB','EU','https://www.countryflags.io/AL/flat/64.png'),
+-- INSERT European Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES ('Albania','ALB','EU','https://www.countryflags.io/AL/flat/64.png'),
 		('Andorra','AND','EU','https://www.countryflags.io/AD/flat/64.png'),
 		('Azerbaijan','AZE','EU','https://www.countryflags.io/AZ/flat/64.png'),
 		('Austria','AUT','EU','https://www.countryflags.io/AT/flat/64.png'),
@@ -155,7 +155,7 @@ values ('Albania','ALB','EU','https://www.countryflags.io/AL/flat/64.png'),
 		('Estonia','EST','EU','https://www.countryflags.io/EE/flat/64.png'),
 		('Faroe Islands','FRO','EU','https://www.countryflags.io/FO/flat/64.png'),
 		('Finland','FIN','EU','https://www.countryflags.io/FI/flat/64.png'),
-		('Åland Islands','ALA','EU','https://www.countryflags.io/AX/flat/64.png'),
+		('ï¿½land Islands','ALA','EU','https://www.countryflags.io/AX/flat/64.png'),
 		('France','FRA','EU','https://www.countryflags.io/FR/flat/64.png'),
 		('Georgia','GEO','EU','https://www.countryflags.io/GE/flat/64.png'),
 		('Germany','DEU','EU','https://www.countryflags.io/DE/flat/64.png'),
@@ -196,9 +196,9 @@ values ('Albania','ALB','EU','https://www.countryflags.io/AL/flat/64.png'),
 		('Jersey','JEY','EU','https://www.countryflags.io/JE/flat/64.png'),
 		('Isle of Man','IMN','EU','https://www.countryflags.io/IM/flat/64.png');
 
--- Insert Oceania Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values  ('American Samoa','ASM','OC','https://www.countryflags.io/AS/flat/64.png'),
+-- INSERT Oceania Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES  ('American Samoa','ASM','OC','https://www.countryflags.io/AS/flat/64.png'),
 		('Australia','AUS','OC','https://www.countryflags.io/AU/flat/64.png'),
 		('Solomon Islands','SLB','OC','https://www.countryflags.io/SB/flat/64.png'),
 		('Cook Islands','COK','OC','https://www.countryflags.io/CK/flat/64.png'),
@@ -225,9 +225,9 @@ values  ('American Samoa','ASM','OC','https://www.countryflags.io/AS/flat/64.png
 		('Samoa','WSM','OC','https://www.countryflags.io/WS/flat/64.png');
 
 
--- Insert North America Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values  ('Antigua and Barbuda','ATG','NA','https://www.countryflags.io/AG/flat/64.png'),
+-- INSERT North America Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES  ('Antigua and Barbuda','ATG','NA','https://www.countryflags.io/AG/flat/64.png'),
 		('Bahamas','BHS','NA','https://www.countryflags.io/BS/flat/64.png'),
 		('Barbados','BRB','NA','https://www.countryflags.io/BB/flat/64.png'),
 		('Bermuda','BMU','NA','https://www.countryflags.io/BM/flat/64.png'),
@@ -251,7 +251,7 @@ values  ('Antigua and Barbuda','ATG','NA','https://www.countryflags.io/AG/flat/6
 		('Mexico','MEX','NA','https://www.countryflags.io/MX/flat/64.png'),
 		('Montserrat','MSR','NA','https://www.countryflags.io/MS/flat/64.png'),
 		('Netherlands Antilles','ANT','NA','https://www.countryflags.io/AN/flat/64.png'),
-		('Curaçao','CUW','NA','https://www.countryflags.io/CW/flat/64.png'),
+		('Curaï¿½ao','CUW','NA','https://www.countryflags.io/CW/flat/64.png'),
 		('Aruba','ABW','NA','https://www.countryflags.io/AW/flat/64.png'),
 		('Sint Maarten (Netherlands)','SXM','NA','https://www.countryflags.io/SX/flat/64.png'),
 		('Bonaire','BES','NA','https://www.countryflags.io/BQ/flat/64.png'),
@@ -272,9 +272,9 @@ values  ('Antigua and Barbuda','ATG','NA','https://www.countryflags.io/AG/flat/6
 		('United States Virgin Islands','VIR','NA','https://www.countryflags.io/VI/flat/64.png');
 
 
--- Insert South America Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values  ('Argentina','ARG','SA','https://www.countryflags.io/AR/flat/64.png'),
+-- INSERT South America Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES  ('Argentina','ARG','SA','https://www.countryflags.io/AR/flat/64.png'),
 		('Bolivia','BOL','SA','https://www.countryflags.io/BO/flat/64.png'),
 		('Brazil','BRA','SA','https://www.countryflags.io/BR/flat/64.png'),
 		('Chile','CHL','SA','https://www.countryflags.io/CL/flat/64.png'),
@@ -289,9 +289,9 @@ values  ('Argentina','ARG','SA','https://www.countryflags.io/AR/flat/64.png'),
 		('Uruguay','URY','SA','https://www.countryflags.io/UY/flat/64.png'),
 		('Venezuela','VEN','SA','https://www.countryflags.io/VE/flat/64.png');
 
--- Insert Antartica Countries
-insert into Countries (Name, Code, ContinentCode, FlagUrl)
-values  ('Antarctica (the territory South of 60 deg S)','ATA','AN','https://www.countryflags.io/AQ/flat/64.png'),
+-- INSERT Antartica Countries
+INSERT INTO Countries (Name, Code, ContinentCode, FlagUrl)
+VALUES  ('Antarctica (the territory South of 60 deg S)','ATA','AN','https://www.countryflags.io/AQ/flat/64.png'),
 		('Bouvet Island (Bouvetoya)','BVT','AN','https://www.countryflags.io/BV/flat/64.png'),
 		('South Georgia ','SGS','AN','https://www.countryflags.io/GS/flat/64.png'),
 		('French Southern Territories','ATF','AN','https://www.countryflags.io/TF/flat/64.png'),
