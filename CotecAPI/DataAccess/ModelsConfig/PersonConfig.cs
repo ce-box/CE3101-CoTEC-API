@@ -39,6 +39,10 @@ namespace CotecAPI.DataAccess.ModelsConfig
                          .HasColumnType("varchar(60)")
                          .IsRequired();
             
+            // Person Address
+            entityBuilder.Property(con => con.Address)
+                         .HasColumnType("varchar(255)");
+
             // Person Region
             entityBuilder.Property(con => con.Region)
                          .HasColumnType("varchar(50)")

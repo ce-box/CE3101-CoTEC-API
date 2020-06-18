@@ -11,6 +11,8 @@ namespace CotecAPI.Models
         public DateTime DoB { get; set; }
         public string Email { get; set; }
 
+        public string Address { get; set;}
+
         // One-to-many relationship
         public string Region { get; set; }
         public string Country { get; set; }

@@ -4,14 +4,16 @@ using CotecAPI.DataAccess.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CotecAPI.Migrations
 {
     [DbContext(typeof(CotecContext))]
-    partial class CotecContextModelSnapshot : ModelSnapshot
+    [Migration("20200618220259_ContactAddress")]
+    partial class ContactAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
