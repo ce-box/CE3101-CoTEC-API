@@ -7,11 +7,11 @@
         public string Status { get; set; }
 
 
-        // FK
+        // FK reference Country.Code and ContainmentMeasure.Id
         public string CountryCode { get; set; }
         public virtual Country Country { get; set; }
 
         public int MeasureId { get; set; }
-        public virtual SanitaryMeasure Measure { get; set; }
+        public virtual ContainmentMeasure Measure { get; set; }
     }
 }

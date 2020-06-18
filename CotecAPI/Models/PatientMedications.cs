@@ -5,10 +5,11 @@
         public string Prescription { get; set; }
 
 
-        //FK
+        // FKs of Many-to-Many relationships 
         public string PatientDni { get; set; }
         public virtual Patient Patient { get; set; }
-        public string Medicationid { get; set; }
+
+        public string MedicationId { get; set; }
         public virtual Medication Medication { get; set; }
     }
 }

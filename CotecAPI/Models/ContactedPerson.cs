@@ -1,4 +1,6 @@
-﻿namespace CotecAPI.Models
+﻿using System.Collections.Generic;
+
+namespace CotecAPI.Models
 {
     public class ContactedPerson
     {
@@ -8,10 +10,15 @@
         public string DoB { get; set; }
         public string Email { get; set; }
 
-        // FK
+        // One-to-many relationship
         public string Region { get; set; }
         public string Country { get; set; }
-        public virtual Region HRegion { get; set; }
+        public virtual Region PersonRegion { get; set; }
 
+        
+        // Many-to-many relationships
+        public virtual ICollection<PersonPathologies> Pathologies { get; set; }
+        public virtual ICollection<PersonsContactedByPatient> ContactedPatients { get; set;}
+   
     }
 }

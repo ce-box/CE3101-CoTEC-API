@@ -16,8 +16,10 @@ namespace CotecAPI.Models
         public string Region { get; set; }
         public string Country { get; set; }
         public virtual Region HRegion { get; set; }
+        
 
         // One-to-many relationships
         public virtual ICollection<HospitalEmployee> Employees { get; set; }
+        public virtual ICollection<Patient> Patients { get; set; }
     }
 }
