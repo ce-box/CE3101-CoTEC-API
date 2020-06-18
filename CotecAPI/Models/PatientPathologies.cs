@@ -6,7 +6,7 @@
         public string PatientDni { get; set; }
         public virtual Patient Patient { get; set; }
         
-        public string PatholohyName { get; set; }
+        public string PathologyName { get; set; }
         public virtual Pathology Pathology { get; set; }
     }
 }

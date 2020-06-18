@@ -9,6 +9,6 @@ namespace CotecAPI.Models
         public string Description { get; set; }
 
         // Many-to-many relationship
-        public virtual ICollection<CountryContainmemtMeasures> ImplementedMeasures { get; set; }
+        public virtual ICollection<CountryContainmentMeasures> ImplementedMeasures { get; set; }
     }
 }

@@ -9,7 +9,7 @@
         public string PatientDni { get; set; }
         public virtual Patient Patient { get; set; }
 
-        public string MedicationId { get; set; }
+        public int MedicationId { get; set; }
         public virtual Medication Medication { get; set; }
     }
 }

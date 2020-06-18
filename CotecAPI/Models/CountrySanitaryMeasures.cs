@@ -1,9 +1,11 @@
+using System;
+
 namespace CotecAPI.Models
 {
     public class CountrySanitaryMeasures
     {
-        public string StartDate { get; set; } // Format: yyyy-mm-dd
-        public string EndDate { get; set; } // Format: yyyy-mm-dd
+        public DateTime StartDate { get; set; } // Format: yyyy-mm-dd
+        public DateTime EndDate { get; set; } // Format: yyyy-mm-dd
         public string Status { get; set; } // Status in ACTIVE or INACTIVE 
 
 
