@@ -24,6 +24,13 @@ namespace CotecAPI.DataAccess.Database
 
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<HospitalEmployee> HEmployees { get; set; }
+        public DbSet<Medication> Medications { get; set; }
+
+
+        // No config required
+        public DbSet<PatientStatus> PatientStatuses { get; set; } 
+        public DbSet<PharmaceuticalCompany> P_Companies { get; set; }
+        public DbSet<Pathology> Pathologies { get; set; } 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
@@ -47,6 +54,7 @@ namespace CotecAPI.DataAccess.Database
             // Hospital Entities
             HospitalConfig.SetEntityBuilder(modelBuilder.Entity<Hospital>());
             HEmployeeConfig.SetEntityBuilder(modelBuilder.Entity<HospitalEmployee>());
+            MedicationConfig.SetEntityBuilder(modelBuilder.Entity<Medication>());
 
         }
         

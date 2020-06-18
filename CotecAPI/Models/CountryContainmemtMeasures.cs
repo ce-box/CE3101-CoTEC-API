@@ -1,9 +1,11 @@
-﻿namespace CotecAPI.Models
+﻿using System;
+
+namespace CotecAPI.Models
 {
     public class CountryContainmemtMeasures
     {
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string Status { get; set; }
 
 

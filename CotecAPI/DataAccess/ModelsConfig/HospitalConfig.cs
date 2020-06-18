@@ -14,6 +14,10 @@ namespace CotecAPI.DataAccess.ModelsConfig
             // Primary Key
             entityBuilder.HasKey(h => h.Id); 
 
+            // HospitalId
+            entityBuilder.Property(h => h.Id)
+                         .ValueGeneratedOnAdd();
+
             // Hospital Name
             entityBuilder.Property(h => h.Name)
                          .HasColumnType("varchar")
