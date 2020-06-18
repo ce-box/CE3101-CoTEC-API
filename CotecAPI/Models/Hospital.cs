@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CotecAPI.Models
 {
     public class Hospital
@@ -16,5 +18,6 @@ namespace CotecAPI.Models
         public virtual Region HRegion { get; set; }
 
         // One-to-many relationships
+        public virtual ICollection<HospitalEmployee> Employees { get; set; }
     }
 }
