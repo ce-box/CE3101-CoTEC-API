@@ -20,24 +20,24 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // CBP PatientDni
             entityBuilder.Property(p => p.PatientDni)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(30)
+                         .HasColumnType("varchar(30)")
                          .IsRequired();
 
             // CBP ContactDni
             entityBuilder.Property(p => p.ContactDni)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(30)
+                         .HasColumnType("varchar(30)")
                          .IsRequired();
             
             // Foreign Key
             entityBuilder.HasOne<Patient>(p => p.Patient)
                          .WithMany(pat => pat.ContactedPersons)
-                         .HasForeignKey(p => p.PatientDni);
+                         .HasForeignKey(p => p.PatientDni)
+                         .OnDelete(DeleteBehavior.NoAction);
 
             entityBuilder.HasOne<ContactedPerson>(p => p.Contacted)
                          .WithMany(cp => cp.ContactedPatients)
-                         .HasForeignKey(p => p.ContactDni);
+                         .HasForeignKey(p => p.ContactDni)
+                         .OnDelete(DeleteBehavior.NoAction);
 
         }
 

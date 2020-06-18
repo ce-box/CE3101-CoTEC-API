@@ -20,20 +20,17 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Hospital Name
             entityBuilder.Property(h => h.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(255)
+                         .HasColumnType("varchar(255)")
                          .IsRequired();
 
             // Hospital ManagerName
             entityBuilder.Property(h => h.ManagerName)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(60)
+                         .HasColumnType("varchar(60)")
                          .IsRequired();
 
             // Hospital Phone
             entityBuilder.Property(h => h.Phone)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(15)
+                         .HasColumnType("varchar(15)")
                          .IsRequired();
 
             // Hospital Capacity
@@ -48,20 +45,19 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Region Name
             entityBuilder.Property(h => h.Region)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(50)
+                         .HasColumnType("varchar(50)")
                          .IsRequired();
 
             // Country Code
             entityBuilder.Property(h => h.Country)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(3)
+                         .HasColumnType("varchar(3)")
                          .IsRequired();
 
             // Foreign Key
             entityBuilder.HasOne<Region>(h => h.HRegion)
                          .WithMany(r=> r.Hospitals)
-                         .HasForeignKey(h => new{h.Region,h.Country});
+                         .HasForeignKey(h => new{h.Region,h.Country})
+                         .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

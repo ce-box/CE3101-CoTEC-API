@@ -13,6 +13,7 @@
 
 -- Select DB
 USE COTEC_DB;
+GO
 
 -- INSERT Continents
 INSERT INTO Continents (Name, Code)

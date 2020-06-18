@@ -20,8 +20,7 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Medication Name
             entityBuilder.Property(m => m.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(60)
+                         .HasColumnType("varchar(60)")
                          .IsRequired();
 
             // Medication PharmaceuticCo

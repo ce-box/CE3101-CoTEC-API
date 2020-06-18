@@ -13,8 +13,8 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,8 +25,8 @@ namespace CotecAPI.Migrations
                 name: "Continents",
                 columns: table => new
                 {
-                    Code = table.Column<string>(type: "varchar", maxLength: 3, nullable: false),
-                    Name = table.Column<string>(type: "varchar", maxLength: 15, nullable: false)
+                    Code = table.Column<string>(type: "varchar(2)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,10 +37,10 @@ namespace CotecAPI.Migrations
                 name: "Pathologies",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "varchar", maxLength: 50, nullable: false),
-                    Symptoms = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
-                    Treatment = table.Column<string>(type: "varchar", maxLength: 255, nullable: false)
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Symptoms = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Treatment = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +53,7 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 20, nullable: false)
+                    Name = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 60, nullable: false)
+                    Name = table.Column<string>(type: "varchar(60)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,7 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -91,10 +91,10 @@ namespace CotecAPI.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    Code = table.Column<string>(type: "varchar", maxLength: 3, nullable: false),
-                    Name = table.Column<string>(type: "varchar", maxLength: 60, nullable: false),
-                    FlagUrl = table.Column<string>(type: "varchar", maxLength: 45, nullable: true),
-                    ContinentCode = table.Column<string>(type: "varchar", maxLength: 2, nullable: false)
+                    Code = table.Column<string>(type: "varchar(3)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(60)", nullable: false),
+                    FlagUrl = table.Column<string>(type: "varchar(45)", nullable: true),
+                    ContinentCode = table.Column<string>(type: "varchar(2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,7 +104,7 @@ namespace CotecAPI.Migrations
                         column: x => x.ContinentCode,
                         principalTable: "Continents",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +113,7 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 60, nullable: false),
+                    Name = table.Column<string>(type: "varchar(60)", nullable: false),
                     PharmaceuticCo = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -124,18 +124,18 @@ namespace CotecAPI.Migrations
                         column: x => x.PharmaceuticCo,
                         principalTable: "PharmaceuticalCompanies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Admins",
                 columns: table => new
                 {
-                    Username = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    Password = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    Name = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    CountryCode = table.Column<string>(type: "varchar", maxLength: 3, nullable: false)
+                    Username = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Password = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(20)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(20)", nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,18 +145,18 @@ namespace CotecAPI.Migrations
                         column: x => x.CountryCode,
                         principalTable: "Countries",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CountryContainmentMeasures",
                 columns: table => new
                 {
-                    CountryCode = table.Column<string>(type: "varchar", maxLength: 3, nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(3)", nullable: false),
                     MeasureId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
-                    Status = table.Column<string>(type: "varchar", maxLength: 15, nullable: false)
+                    Status = table.Column<string>(type: "varchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,25 +165,23 @@ namespace CotecAPI.Migrations
                         name: "FK_CountryContainmentMeasures_Countries_CountryCode",
                         column: x => x.CountryCode,
                         principalTable: "Countries",
-                        principalColumn: "Code",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Code");
                     table.ForeignKey(
                         name: "FK_CountryContainmentMeasures_ContainmentMeasures_MeasureId",
                         column: x => x.MeasureId,
                         principalTable: "ContainmentMeasures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "CountrySanitaryMeasures",
                 columns: table => new
                 {
-                    CountryCode = table.Column<string>(type: "varchar", maxLength: 3, nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(3)", nullable: false),
                     MeasureId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
-                    Status = table.Column<string>(type: "varchar", maxLength: 15, nullable: false)
+                    Status = table.Column<string>(type: "varchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,14 +190,12 @@ namespace CotecAPI.Migrations
                         name: "FK_CountrySanitaryMeasures_Countries_CountryCode",
                         column: x => x.CountryCode,
                         principalTable: "Countries",
-                        principalColumn: "Code",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Code");
                     table.ForeignKey(
                         name: "FK_CountrySanitaryMeasures_SanitaryMeasures_MeasureId",
                         column: x => x.MeasureId,
                         principalTable: "SanitaryMeasures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -208,9 +204,9 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
+                    Type = table.Column<string>(type: "varchar(20)", nullable: false),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
-                    CountryCode = table.Column<string>(type: "varchar", maxLength: 3, nullable: false)
+                    CountryCode = table.Column<string>(type: "varchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,15 +216,15 @@ namespace CotecAPI.Migrations
                         column: x => x.CountryCode,
                         principalTable: "Countries",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Regions",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "varchar", maxLength: 50, nullable: false),
-                    CountryCode = table.Column<string>(type: "varchar", maxLength: 3, nullable: false)
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -238,20 +234,20 @@ namespace CotecAPI.Migrations
                         column: x => x.CountryCode,
                         principalTable: "Countries",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ContactedPersons",
                 columns: table => new
                 {
-                    Dni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
-                    Name = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
+                    Dni = table.Column<string>(type: "varchar(30)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(20)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(20)", nullable: false),
                     DoB = table.Column<DateTime>(type: "date", nullable: false),
-                    Email = table.Column<string>(type: "varchar", maxLength: 60, nullable: false),
-                    Region = table.Column<string>(type: "varchar", maxLength: 50, nullable: false),
-                    Country = table.Column<string>(type: "varchar", maxLength: 3, nullable: false)
+                    Email = table.Column<string>(type: "varchar(60)", nullable: false),
+                    Region = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Country = table.Column<string>(type: "varchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -260,8 +256,7 @@ namespace CotecAPI.Migrations
                         name: "FK_ContactedPersons_Regions_Region_Country",
                         columns: x => new { x.Region, x.Country },
                         principalTable: "Regions",
-                        principalColumns: new[] { "Name", "CountryCode" },
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumns: new[] { "Name", "CountryCode" });
                 });
 
             migrationBuilder.CreateTable(
@@ -270,13 +265,13 @@ namespace CotecAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
-                    ManagerName = table.Column<string>(type: "varchar", maxLength: 60, nullable: false),
-                    Phone = table.Column<string>(type: "varchar", maxLength: 15, nullable: false),
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ManagerName = table.Column<string>(type: "varchar(60)", nullable: false),
+                    Phone = table.Column<string>(type: "varchar(15)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
                     ICU_Capacity = table.Column<int>(type: "int", nullable: false),
-                    Region = table.Column<string>(type: "varchar", maxLength: 50, nullable: false),
-                    Country = table.Column<string>(type: "varchar", maxLength: 3, nullable: false)
+                    Region = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Country = table.Column<string>(type: "varchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -285,16 +280,15 @@ namespace CotecAPI.Migrations
                         name: "FK_Hospitals_Regions_Region_Country",
                         columns: x => new { x.Region, x.Country },
                         principalTable: "Regions",
-                        principalColumns: new[] { "Name", "CountryCode" },
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumns: new[] { "Name", "CountryCode" });
                 });
 
             migrationBuilder.CreateTable(
                 name: "PersonPathologies",
                 columns: table => new
                 {
-                    PersonDni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
-                    PathologyName = table.Column<string>(type: "varchar", maxLength: 50, nullable: false)
+                    PersonDni = table.Column<string>(type: "varchar(30)", nullable: false),
+                    PathologyName = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -303,24 +297,22 @@ namespace CotecAPI.Migrations
                         name: "FK_PersonPathologies_Pathologies_PathologyName",
                         column: x => x.PathologyName,
                         principalTable: "Pathologies",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Name");
                     table.ForeignKey(
                         name: "FK_PersonPathologies_ContactedPersons_PersonDni",
                         column: x => x.PersonDni,
                         principalTable: "ContactedPersons",
-                        principalColumn: "Dni",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Dni");
                 });
 
             migrationBuilder.CreateTable(
                 name: "HospitalEmployees",
                 columns: table => new
                 {
-                    Username = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    Password = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    Name = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
+                    Username = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Password = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(20)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(20)", nullable: false),
                     Hospital_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -331,23 +323,23 @@ namespace CotecAPI.Migrations
                         column: x => x.Hospital_Id,
                         principalTable: "Hospitals",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
-                    Dni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
-                    Name = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(type: "varchar", maxLength: 20, nullable: false),
+                    Dni = table.Column<string>(type: "varchar(30)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(20)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(20)", nullable: false),
                     DoB = table.Column<DateTime>(type: "date", nullable: false),
                     Hospitalized = table.Column<bool>(type: "bit", nullable: false),
                     ICU = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Hospital_Id = table.Column<int>(type: "int", nullable: false),
-                    Region = table.Column<string>(type: "varchar", maxLength: 50, nullable: false),
-                    Country = table.Column<string>(type: "varchar", maxLength: 3, nullable: false)
+                    Region = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Country = table.Column<string>(type: "varchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -356,29 +348,26 @@ namespace CotecAPI.Migrations
                         name: "FK_Patients_Hospitals_Hospital_Id",
                         column: x => x.Hospital_Id,
                         principalTable: "Hospitals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Patients_PatientStatus_Status",
                         column: x => x.Status,
                         principalTable: "PatientStatus",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Patients_Regions_Region_Country",
                         columns: x => new { x.Region, x.Country },
                         principalTable: "Regions",
-                        principalColumns: new[] { "Name", "CountryCode" },
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumns: new[] { "Name", "CountryCode" });
                 });
 
             migrationBuilder.CreateTable(
                 name: "PatientMedications",
                 columns: table => new
                 {
-                    PatientDni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
+                    PatientDni = table.Column<string>(type: "varchar(30)", nullable: false),
                     MedicationId = table.Column<int>(type: "int", nullable: false),
-                    Prescription = table.Column<string>(type: "varchar", maxLength: 255, nullable: false)
+                    Prescription = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -387,22 +376,20 @@ namespace CotecAPI.Migrations
                         name: "FK_PatientMedications_Medications_MedicationId",
                         column: x => x.MedicationId,
                         principalTable: "Medications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PatientMedications_Patients_PatientDni",
                         column: x => x.PatientDni,
                         principalTable: "Patients",
-                        principalColumn: "Dni",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Dni");
                 });
 
             migrationBuilder.CreateTable(
                 name: "PatientPathologies",
                 columns: table => new
                 {
-                    PatientDni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
-                    PathologyName = table.Column<string>(type: "varchar", maxLength: 50, nullable: false)
+                    PatientDni = table.Column<string>(type: "varchar(30)", nullable: false),
+                    PathologyName = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -411,22 +398,20 @@ namespace CotecAPI.Migrations
                         name: "FK_PatientPathologies_Pathologies_PathologyName",
                         column: x => x.PathologyName,
                         principalTable: "Pathologies",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Name");
                     table.ForeignKey(
                         name: "FK_PatientPathologies_Patients_PatientDni",
                         column: x => x.PatientDni,
                         principalTable: "Patients",
-                        principalColumn: "Dni",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Dni");
                 });
 
             migrationBuilder.CreateTable(
                 name: "PersonsContactedByPatient",
                 columns: table => new
                 {
-                    PatientDni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
-                    ContactDni = table.Column<string>(type: "varchar", maxLength: 30, nullable: false),
+                    PatientDni = table.Column<string>(type: "varchar(30)", nullable: false),
+                    ContactDni = table.Column<string>(type: "varchar(30)", nullable: false),
                     MeetingDate = table.Column<DateTime>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -436,14 +421,12 @@ namespace CotecAPI.Migrations
                         name: "FK_PersonsContactedByPatient_ContactedPersons_ContactDni",
                         column: x => x.ContactDni,
                         principalTable: "ContactedPersons",
-                        principalColumn: "Dni",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Dni");
                     table.ForeignKey(
                         name: "FK_PersonsContactedByPatient_Patients_PatientDni",
                         column: x => x.PatientDni,
                         principalTable: "Patients",
-                        principalColumn: "Dni",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Dni");
                 });
 
             migrationBuilder.CreateIndex(

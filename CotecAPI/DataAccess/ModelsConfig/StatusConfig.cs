@@ -22,8 +22,7 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Name
             entityBuilder.Property(s => s.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
         }
     }

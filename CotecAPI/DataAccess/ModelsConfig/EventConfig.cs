@@ -16,8 +16,7 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Event Type
             entityBuilder.Property(e => e.Type)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
 
             // Event Date
@@ -27,8 +26,7 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // CountryCode
             entityBuilder.Property(e => e.CountryCode)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(3)
+                         .HasColumnType("varchar(3)")
                          .IsRequired();
 
             // Foreign Key

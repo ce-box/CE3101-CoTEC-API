@@ -16,14 +16,12 @@ namespace CotecAPI.DataAccess.ModelsConfig
             
             // Continent Code
             entityBuilder.Property(cnt => cnt.Code)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(3)
+                         .HasColumnType("varchar(2)")
                          .IsRequired();
             
             // Continent Name
             entityBuilder.Property(cnt => cnt.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(15)
+                         .HasColumnType("varchar(15)")
                          .IsRequired();
         }
     }

@@ -22,28 +22,23 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.Admin", b =>
                 {
                     b.Property<string>("Username")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Username");
 
@@ -55,36 +50,30 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.ContactedPerson", b =>
                 {
                     b.Property<string>("Dni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<DateTime>("DoB")
                         .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(60);
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Region")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Dni");
 
@@ -101,12 +90,12 @@ namespace CotecAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -116,13 +105,11 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.Continent", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(15)");
 
                     b.HasKey("Code");
 
@@ -132,22 +119,18 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.Country", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<string>("ContinentCode")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(2);
+                        .HasColumnType("varchar(2)");
 
                     b.Property<string>("FlagUrl")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(45);
+                        .HasColumnType("varchar(45)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(60);
+                        .HasColumnType("varchar(60)");
 
                     b.HasKey("Code");
 
@@ -159,8 +142,7 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.CountryContainmentMeasures", b =>
                 {
                     b.Property<string>("CountryCode")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<int>("MeasureId")
                         .HasColumnType("int");
@@ -173,8 +155,7 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(15)");
 
                     b.HasKey("CountryCode", "MeasureId");
 
@@ -186,8 +167,7 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.CountrySanitaryMeasures", b =>
                 {
                     b.Property<string>("CountryCode")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<int>("MeasureId")
                         .HasColumnType("int");
@@ -200,8 +180,7 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(15)");
 
                     b.HasKey("CountryCode", "MeasureId");
 
@@ -219,16 +198,14 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("date");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
@@ -249,31 +226,26 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<int>("ICU_Capacity")
                         .HasColumnType("int");
 
                     b.Property<string>("ManagerName")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(60);
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(15);
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("Region")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -285,26 +257,22 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.HospitalEmployee", b =>
                 {
                     b.Property<string>("Username")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int>("Hospital_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Username");
 
@@ -322,8 +290,7 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(60);
+                        .HasColumnType("varchar(60)");
 
                     b.Property<int>("PharmaceuticCo")
                         .HasColumnType("int");
@@ -338,23 +305,19 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.Pathology", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Symptoms")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Treatment")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Name");
 
@@ -364,13 +327,11 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.Patient", b =>
                 {
                     b.Property<string>("Dni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.Property<DateTime>("DoB")
                         .HasColumnType("date");
@@ -386,18 +347,15 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Region")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -419,13 +377,11 @@ namespace CotecAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PatientDni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Prescription")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("MedicationId", "PatientDni");
 
@@ -437,12 +393,10 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.PatientPathologies", b =>
                 {
                     b.Property<string>("PathologyName")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("PatientDni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("PathologyName", "PatientDni");
 
@@ -460,8 +414,7 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(20);
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
@@ -471,12 +424,10 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.PersonPathologies", b =>
                 {
                     b.Property<string>("PathologyName")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("PersonDni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("PathologyName", "PersonDni");
 
@@ -488,12 +439,10 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.PersonsContactedByPatient", b =>
                 {
                     b.Property<string>("ContactDni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("PatientDni")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(30);
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("MeetingDate")
                         .HasColumnType("date");
@@ -514,8 +463,7 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(60);
+                        .HasColumnType("varchar(60)");
 
                     b.HasKey("Id");
 
@@ -525,12 +473,10 @@ namespace CotecAPI.Migrations
             modelBuilder.Entity("CotecAPI.Models.Region", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("CountryCode")
-                        .HasColumnType("varchar")
-                        .HasMaxLength(3);
+                        .HasColumnType("varchar(3)");
 
                     b.HasKey("Name", "CountryCode");
 
@@ -551,8 +497,7 @@ namespace CotecAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasMaxLength(255);
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -573,7 +518,7 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Region", "PersonRegion")
                         .WithMany("ContactedPersons")
                         .HasForeignKey("Region", "Country")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -591,13 +536,13 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Country", "Country")
                         .WithMany("ImplementedContainmentMeasures")
                         .HasForeignKey("CountryCode")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.ContainmentMeasure", "Measure")
                         .WithMany("ImplementedMeasures")
                         .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -606,13 +551,13 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Country", "Country")
                         .WithMany("ImplementedSanitaryMeasures")
                         .HasForeignKey("CountryCode")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.SanitaryMeasure", "Measure")
                         .WithMany("ImplementedMeasures")
                         .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -630,7 +575,7 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Region", "HRegion")
                         .WithMany("Hospitals")
                         .HasForeignKey("Region", "Country")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -657,19 +602,19 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Hospital", "Hospital")
                         .WithMany("Patients")
                         .HasForeignKey("Hospital_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.PatientStatus", "PatientStatus")
                         .WithMany("Patients")
                         .HasForeignKey("Status")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.Region", "PatientRegion")
                         .WithMany("Patients")
                         .HasForeignKey("Region", "Country")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -678,13 +623,13 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Medication", "Medication")
                         .WithMany("PatientMedications")
                         .HasForeignKey("MedicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.Patient", "Patient")
                         .WithMany("Medications")
                         .HasForeignKey("PatientDni")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -693,13 +638,13 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Pathology", "Pathology")
                         .WithMany("PatientPathologies")
                         .HasForeignKey("PathologyName")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.Patient", "Patient")
                         .WithMany("Pathologies")
                         .HasForeignKey("PatientDni")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -708,13 +653,13 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.Pathology", "Pathology")
                         .WithMany("PersonPathologies")
                         .HasForeignKey("PathologyName")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.ContactedPerson", "Contacted")
                         .WithMany("Pathologies")
                         .HasForeignKey("PersonDni")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -723,13 +668,13 @@ namespace CotecAPI.Migrations
                     b.HasOne("CotecAPI.Models.ContactedPerson", "Contacted")
                         .WithMany("ContactedPatients")
                         .HasForeignKey("ContactDni")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CotecAPI.Models.Patient", "Patient")
                         .WithMany("ContactedPersons")
                         .HasForeignKey("PatientDni")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
