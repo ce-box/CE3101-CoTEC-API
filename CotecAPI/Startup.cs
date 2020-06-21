@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CotecAPI.DataAccess.Database;
+using CotecAPI.DataAccess.Repositories;
+using CotecAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -44,6 +46,7 @@ namespace CotecAPI
 
             
             // TODO: Agregar las Inyecciones de Dependencias
+            services.AddScoped<PatientRepo>();
         }
 
         

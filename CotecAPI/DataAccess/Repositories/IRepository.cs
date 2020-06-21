@@ -2,10 +2,15 @@ using System.Collections.Generic;
 
 namespace CotecAPI.DataAccess.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<T,S> 
+    where T: class
+    where S: class
     {
-        IEnumerable<T> GetAll();
-        T GetEntityById(int id);
+        IEnumerable<S> GetAll();
+        void Create(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+        bool SaveChanges();
 
     }
 }
