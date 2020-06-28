@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CotecAPI.Models
+namespace CotecAPI.Models.Entities
 {
     public class Continent
     {

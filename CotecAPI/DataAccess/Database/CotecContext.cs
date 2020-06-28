@@ -1,6 +1,6 @@
 using CotecAPI.DataAccess.ModelsConfig;
-using CotecAPI.Models;
-using CotecAPI.Models.Content;
+using CotecAPI.Models.Entities;
+using CotecAPI.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace CotecAPI.DataAccess.Database

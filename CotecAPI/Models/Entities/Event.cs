@@ -1,6 +1,6 @@
 using System;
 
-namespace CotecAPI.Models
+namespace CotecAPI.Models.Entities
 {
     public class Event
     {

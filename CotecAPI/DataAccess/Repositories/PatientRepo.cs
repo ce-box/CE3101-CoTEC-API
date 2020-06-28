@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CotecAPI.DataAccess.Database;
-using CotecAPI.Models;
-using CotecAPI.Models.Content;
+using CotecAPI.Models.Entities;
+using CotecAPI.Models.Views;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 

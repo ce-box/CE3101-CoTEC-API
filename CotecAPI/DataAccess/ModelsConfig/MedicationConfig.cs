@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

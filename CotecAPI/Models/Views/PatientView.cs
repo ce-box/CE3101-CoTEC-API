@@ -1,4 +1,4 @@
-namespace CotecAPI.Models.Content
+namespace CotecAPI.Models.Views
 {
     public class PatientView
     {
