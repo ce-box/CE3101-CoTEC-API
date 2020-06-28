@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CotecAPI.DataAccess.Repositories
 {
-    public class PatientRepo : IRepository<Patient,PatientView>
+    public class PatientRepo
     {
         private readonly CotecContext _context;
 
