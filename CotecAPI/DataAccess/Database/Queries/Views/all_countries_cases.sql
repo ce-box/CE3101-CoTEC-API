@@ -6,8 +6,8 @@ GO
 CREATE VIEW GetAllCountriesCases 
 AS
 SELECT
-    C.Name,
-    C.Code,
+    C.Name AS CountryName,
+    C.Code AS CountryCode,
     C.FlagUrl,
     -- Cases inf@
     (
@@ -26,6 +26,6 @@ SELECT
         WHERE Ev.Type= 'DEAD' AND Ev.CountryCode=C.Code
     ) AS Deaths,
     dbo.ACTIVE_CASES(C.Code) AS Active,
-    dbo.DAILY_INCREASE(C.Code) AS Daily_Increase  
+    dbo.DAILY_INCREASE(C.Code) AS DailyIncrease  
 FROM Countries AS C;
 GO

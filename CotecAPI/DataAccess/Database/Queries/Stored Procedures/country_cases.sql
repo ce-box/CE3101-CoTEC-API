@@ -15,8 +15,8 @@ BEGIN
 
     SELECT
         -- CountryMetadata
-        C.Name,
-        C.Code,
+        C.Name as CountryName,
+        C.Code as CountryCode,
         C.FlagUrl,
         -- Cases inf@
         (
@@ -35,7 +35,7 @@ BEGIN
             WHERE Type= 'DEAD'
         ) AS Deaths,
         dbo.ACTIVE_CASES(@Country) AS Active,
-        dbo.DAILY_INCREASE(@Country) AS Daily_Increase
+        dbo.DAILY_INCREASE(@Country) AS DailyIncrease
     FROM Countries as C
     WHERE C.Code = @Country;
 
