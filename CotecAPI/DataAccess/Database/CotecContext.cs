@@ -79,6 +79,7 @@ namespace CotecAPI.DataAccess.Database
             // Views and Stored Procedures
             modelBuilder.Entity<PatientView>().HasNoKey().ToView(null);
             modelBuilder.Entity<CasesView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<MeasureView>().HasNoKey().ToView(null);
 
         }
         
