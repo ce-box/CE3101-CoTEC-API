@@ -3,6 +3,7 @@ using CotecAPI.DataAccess.Repositories;
 using CotecAPI.Models.Views;
 using CotecAPI.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CotecAPI.Controllers
 {
@@ -15,6 +16,34 @@ namespace CotecAPI.Controllers
         public PatientController(PatientRepo repository)
         {
             _repository = repository;
+        }
+
+        
+
+        [HttpPost]
+        [Route("api/v1/patients/new")]
+        public ActionResult<Patient> CreatePatient([FromBody] Patient pat) {
+
+            //Check if patient exists
+            var patientFromRepo = _repository.GetByDni(pat.Dni);
+            if (patientFromRepo != null)
+                return new BadRequestObjectResult(new { message = "Existing Entity", currentDate = DateTime.Now });
+
+            _repository.Create(pat);
+            _repository.SaveChanges();
+
+            return Created("https://cotecapi.com/patients",pat);
+        }
+
+        
+
+        [HttpPost]
+        [Route("api/v1/patients/new/list")]
+        public ActionResult<IEnumerable<Patient>> CreatePatients([FromBody] IEnumerable<Patient> pat) {
+            _repository.CreatePatients(pat);
+            _repository.SaveChanges();
+
+            return Created("https://cotecapi.com/patients",pat);
         }
 
         [HttpGet]
@@ -37,23 +66,34 @@ namespace CotecAPI.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        [Route("api/v1/patients/world")] // world wide
-        public ActionResult<IEnumerable<PatientView>> GetAllPatients() {
-            var patientItem = _repository.GetAll();
-            if (patientItem != null)
-                return Ok(patientItem);
-
-            return NotFound();
-        }
-
-        [HttpPost]
-        [Route("api/v1/patients/new")]
-        public ActionResult<Patient> CreatePatient([FromBody] Patient pat) {
-            _repository.Create(pat);
+        [HttpPut]
+        [Route("api/v1/patients/edit")]
+        public ActionResult UpdatePatient([FromQuery]string Dni, [FromBody] Patient pat)
+        {
+            //Check if patient exists
+            var patientFromRepo = _repository.GetByDni(Dni);
+            if (patientFromRepo == null)
+                return NotFound();
+            
+            _repository.Update(pat);
             _repository.SaveChanges();
-
-            return Created("https://cotecapi.com/patients",pat);
+            
+            return NoContent();
         }
+
+        [HttpDelete]
+        [Route("api/v1/patients/delete")]
+        public ActionResult DeletePatient([FromQuery] string Dni)
+        {
+            //Check if patient exists
+            var patientFromRepo = _repository.GetByDni(Dni);
+            if (patientFromRepo == null)
+                return NotFound();
+            
+            _repository.Delete(Dni);
+            return NoContent();
+        }
+
+
     }
 }

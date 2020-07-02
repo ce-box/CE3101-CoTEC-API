@@ -34,25 +34,28 @@ namespace CotecAPI.DataAccess.Repositories
                 throw new System.ArgumentNullException(nameof(patient));
 
             _context.Add(patient);
+        }
 
-            _context.Database.ExecuteSqlRaw("[NewEvent] @CountryCode={0}, @Type = {1}",patient.Country, "INFECTED");
-            
+        /**         
+         * Create new patiens from a list by adding it to the database. 
+         * The admission of a patient creates a new case event in the patient's country.
+         * @param patient 
+         */
+        public void CreatePatients(IEnumerable<Patient> patients)
+        {
+            if(patients == null)
+                throw new System.ArgumentNullException(nameof(patients));
+
+            _context.Patients.AddRange(patients);
         }
 
         /**         
          * Delete a patient from the database.
          * @param patient 
          */
-        public void Delete(Patient patient)
+        public void Delete(string Dni)
         {
-            _context.Patients.Remove(patient);
-        }
-
-        /**         
-         * Get a view of all patients registered in the database
-         */
-        public IEnumerable<PatientView> GetAll(){
-            return _context.Set<PatientView>().FromSqlRaw("Select * from [World Patients]").ToList();
+            _context.Database.ExecuteSqlRaw($"DELETE FROM Patients WHERE Dni={Dni}");
         }
 
         /**         
@@ -91,15 +94,8 @@ namespace CotecAPI.DataAccess.Repositories
          * @param patient 
          */
         public void Update(Patient patient)
-        {   
-            string Type;
-            switch (patient.Status)
-            {
-                case 3: Type = "RECOVERED"; break;
-                case 4: Type = "DEAD"; break;
-                default: return;
-            }
-            _context.Database.ExecuteSqlRaw("[NewEvent] @CountryCode={0}, @Type = {1}",patient.Country, Type);
+        {  
+            _context.Patients.Update(patient);
         }
 
     }
