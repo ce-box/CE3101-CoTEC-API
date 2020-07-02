@@ -4,6 +4,8 @@ using CotecAPI.Models.Views;
 using CotecAPI.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using AutoMapper;
+using CotecAPI.Models.DTO;
 
 namespace CotecAPI.Controllers
 {
@@ -12,17 +14,19 @@ namespace CotecAPI.Controllers
     public class PatientController : ControllerBase
     {
         private readonly PatientRepo _repository;
+        private readonly IMapper _mapper;
 
-        public PatientController(PatientRepo repository)
+        public PatientController(PatientRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         
 
         [HttpPost]
         [Route("api/v1/patients/new")]
-        public ActionResult<Patient> CreatePatient([FromBody] Patient pat) {
+        public ActionResult<PatientReadDTO> CreatePatient([FromBody] Patient pat) {
 
             //Check if patient exists
             var patientFromRepo = _repository.GetByDni(pat.Dni);
@@ -32,24 +36,38 @@ namespace CotecAPI.Controllers
             _repository.Create(pat);
             _repository.SaveChanges();
 
-            return Created("https://cotecapi.com/patients",pat);
+            var patient = _mapper.Map<PatientReadDTO>(pat);
+            return Created("https://cotecapi.com/patients",patient);
         }
 
         
 
         [HttpPost]
         [Route("api/v1/patients/new/list")]
-        public ActionResult<IEnumerable<Patient>> CreatePatients([FromBody] IEnumerable<Patient> pat) {
+        public ActionResult<IEnumerable<PatientReadDTO>> CreatePatients([FromBody] IEnumerable<Patient> pat) {
+            
             _repository.CreatePatients(pat);
             _repository.SaveChanges();
 
-            return Created("https://cotecapi.com/patients",pat);
+            var patients = _mapper.Map<IEnumerable<PatientReadDTO>>(pat);
+
+            return Created("https://cotecapi.com/patients",patients);
         }
 
         [HttpGet]
         [Route("api/v1/patients")]
         public ActionResult<PatientView> GetPatientByDni([FromQuery] string Dni) {
             var patientItem = _repository.GetByDni(Dni);
+            if (patientItem != null)
+                return Ok(patientItem);
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("api/v1/patients/raw")]
+        public ActionResult<Patient> GetPatientByDniRaw([FromQuery] string Dni) {
+            var patientItem = _repository.GetByDniRaw(Dni);
             if (patientItem != null)
                 return Ok(patientItem);
 

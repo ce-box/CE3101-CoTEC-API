@@ -33,7 +33,7 @@ namespace CotecAPI.DataAccess.Repositories
             if(patient == null)
                 throw new System.ArgumentNullException(nameof(patient));
 
-            _context.Add(patient);
+            _context.Patients.Add(patient);
         }
 
         /**         
@@ -78,6 +78,15 @@ namespace CotecAPI.DataAccess.Repositories
             var param = new SqlParameter("@patientDni",Dni); 
             var patient =  _context.Set<PatientView>().FromSqlRaw("PatientSummary @patientDni",param).ToList();
             return patient[0];
+        }
+
+        /**         
+         * Returns a raw patient given their ID
+         * @param Dni 
+         */
+        public Patient GetByDniRaw(string Dni)
+        {
+            return _context.Patients.FirstOrDefault(p => p.Dni == Dni);
         }
 
         /**         
