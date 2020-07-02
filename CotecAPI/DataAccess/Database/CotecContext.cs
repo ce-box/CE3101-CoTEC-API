@@ -80,6 +80,9 @@ namespace CotecAPI.DataAccess.Database
             modelBuilder.Entity<PatientView>().HasNoKey().ToView(null);
             modelBuilder.Entity<CasesView>().HasNoKey().ToView(null);
             modelBuilder.Entity<MeasureView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<MedicationView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<PatientMedicationView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<PathologyView>().HasNoKey().ToView(null);
 
         }
         
