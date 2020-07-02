@@ -31,7 +31,7 @@ namespace CotecAPI.DataAccess.Repositories
         public IEnumerable<CasesView> GetAll()
         {
             var countries = _context.Set<CasesView>()
-                                    .FromSqlRaw("SELECT CountryName, CountryCode, FlagUrl, Infected, Recovered, Deaths, Active, DailyIncrease FROM GetAllCountriesCases")
+                                    .FromSqlRaw("EXEC GetAllCountriesCases")
                                     .ToList();
             return countries;
         }
