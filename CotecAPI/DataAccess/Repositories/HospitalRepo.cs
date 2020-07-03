@@ -37,7 +37,7 @@ namespace CotecAPI.DataAccess.Repositories
             _context.Hospitals.Add(hosp);
         }
 
-        public void UpdateHospital(Hospital hosp)
+        public void Update(Hospital hosp)
         {
             // nothing
         }

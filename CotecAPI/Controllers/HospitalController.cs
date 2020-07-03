@@ -59,7 +59,7 @@ namespace CotecAPI.Controllers
         // TODO: Revisar ¿porqué no se aplica el patch?
         [HttpPatch]
         [Route("api/v1/hospitals/edit")]
-        public ActionResult<Hospital> EditHospital([FromQuery] int Id, JsonPatchDocument<HospitalUpdateDTO> patchDoc)
+        public ActionResult EditHospital([FromQuery] int Id, JsonPatchDocument<HospitalUpdateDTO> patchDoc)
         {
             // Check if exists
             var hospFromRepo = _repository.getById(Id);
@@ -74,10 +74,10 @@ namespace CotecAPI.Controllers
             
             _mapper.Map(hospToPatch, hospFromRepo);
 
-            _repository.UpdateHospital(hospFromRepo);
-            _repository.SaveChanges();
+            _repository.Update(hospFromRepo);
+            _repository.SaveChanges(); 
 
-            return Ok(hospFromRepo);
+            return NoContent();
         }
 
         [HttpDelete]
