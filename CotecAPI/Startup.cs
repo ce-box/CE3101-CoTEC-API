@@ -54,12 +54,14 @@ namespace CotecAPI
             // TODO: Agregar las Inyecciones de Dependencias
             services.AddScoped<CasesRepo>();
             services.AddScoped<MeasuresRepo>();
+            services.AddScoped<UserRepo>();
 
             services.AddScoped<RegionRepo>();
             services.AddScoped<StatusRepo>();
             services.AddScoped<HospitalRepo>();
 
             services.AddScoped<PatientRepo>();
+            services.AddScoped<ContactRepo>();
             services.AddScoped<MedicationRepo>();
             services.AddScoped<PathologyRepo>();
         }
