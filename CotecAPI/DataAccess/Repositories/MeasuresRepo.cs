@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CotecAPI.DataAccess.Database;
 using CotecAPI.Models.Entities;
 using CotecAPI.Models.Views;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CotecAPI.DataAccess.Repositories
 {
@@ -20,95 +22,36 @@ namespace CotecAPI.DataAccess.Repositories
         /* -------------------------------------------
                            READ METHODS 
            -------------------------------------------*/
+        
+        public IEnumerable<SanitaryMeasure> GetMeasures()
+        {
+            return _context.S_Measures.ToList();
+        }
+
+        public SanitaryMeasure GetById(int Id)
+        {
+            return _context.S_Measures.FirstOrDefault(sm => sm.Id == Id);
+        }
+
+        public CountrySanitaryMeasures GetById(int m_id, string c_code)
+        {
+            return _context.SM_ByCountry.FirstOrDefault(sm => sm.MeasureId == m_id && sm.CountryCode == c_code);
+        }
 
         public IEnumerable<MeasureView> GetSanitaryMeasures([FromQuery] string CountryCode)
         {   
             // TODO: Connect w/DB Context
             // Mock Inf@
-            var measures = new List<MeasureView>(){
-                new MeasureView(){
-                    Name = "Uso Obligatorio de Mascarilla",
-                    Description = "Ahora todos usando mascarilla perros",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Uso Obligatorio de Mascarilla",
-                    Description = "Ahora todos usando mascarilla perros",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Uso Obligatorio de Mascarilla",
-                    Description = "Ahora todos usando mascarilla perros",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Uso Obligatorio de Mascarilla",
-                    Description = "Ahora todos usando mascarilla perros",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Uso Obligatorio de Mascarilla",
-                    Description = "Ahora todos usando mascarilla perros",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                }
-
-            };
+            var measures = _context.Set<MeasureView>().FromSqlRaw($"EXEC GetCountryMeasures @countryCode = {CountryCode}").ToList();
 
             return measures;
         }
 
-        public IEnumerable<MeasureView> GetContainmentMeasures([FromQuery] string CountryCode)
+         public IEnumerable<MeasureView> GetActiveSanitaryMeasures([FromQuery] string CountryCode)
         {   
             // TODO: Connect w/DB Context
             // Mock Inf@
-            var measures = new List<MeasureView>(){
-                new MeasureView(){
-                    Name = "Fronteras Cerradas",
-                    Description = "Se cierran las fronteras",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Fronteras Cerradas",
-                    Description = "Se cierran las fronteras",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Fronteras Cerradas",
-                    Description = "Se cierran las fronteras",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Fronteras Cerradas",
-                    Description = "Se cierran las fronteras",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                },
-                new MeasureView(){
-                    Name = "Fronteras Cerradas",
-                    Description = "Se cierran las fronteras",
-                    StartDate = DateTime.Parse("2020/04/02"),
-                    EndDate = DateTime.Parse("2020/12/31"),
-                    Status = "Active"
-                }
-
-            };
+            var measures = _context.Set<MeasureView>().FromSqlRaw($"EXEC GetActiveCountryMeasures @countryCode = {CountryCode}").ToList();
 
             return measures;
         }
@@ -119,36 +62,26 @@ namespace CotecAPI.DataAccess.Repositories
 
         public void CreateSanitaryMeasure(SanitaryMeasure sm)
         {
-            // TODO: Connect w/DB Context
-        }
-
-        public void CreateContainmentMeasure(ContainmentMeasure cm)
-        {
-            // TODO: Connect w/DB Context
+            _context.S_Measures.Add(sm);
         }
 
         public void AssingSanitaryMeasure(CountrySanitaryMeasures csm)
         {
-            // TODO: Connect w/DB Context
-        }
-
-        public void AssingContainmentMeasure(CountryContainmentMeasures ccm)
-        {
-            // TODO: Connect w/DB Context
+            _context.SM_ByCountry.Add(csm);
         }
 
         /* -------------------------------------------
                         DELETE METHODS 
            -------------------------------------------*/
         
-        public void DeleteSanitaryMeasure(CountrySanitaryMeasures csm)
+        public void DeleteSanitaryMeasure(SanitaryMeasure sm)
         {
-            // TODO: Connect w/DB Context
+            _context.S_Measures.Remove(sm);
         }
 
-        public void DeleteContainmentMeasure(CountryContainmentMeasures ccm)
+        public void DeleteCountrySanitaryMeasure(CountrySanitaryMeasures sm)
         {
-            // TODO: Connect w/DB Context
+            _context.SM_ByCountry.Remove(sm);
         }
 
         /* -------------------------------------------
@@ -157,12 +90,12 @@ namespace CotecAPI.DataAccess.Repositories
         
         public void UpdateSanitaryMeasure(CountrySanitaryMeasures csm)
         {
-            // TODO: Connect w/DB Context
+            // Nothing
         }
 
-        public void UpdateContainmentMeasure(CountryContainmentMeasures ccm)
+        public void UpdateSanitaryMeasure(SanitaryMeasure csm)
         {
-            // TODO: Connect w/DB Context
+            // Nothing
         }
 
         /**         
