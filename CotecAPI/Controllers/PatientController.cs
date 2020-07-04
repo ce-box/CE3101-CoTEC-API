@@ -117,6 +117,37 @@ namespace CotecAPI.Controllers
         [Route("api/v1/patients/excel")]
         public ActionResult<IEnumerable<ExcelPatient>> AddFromExcel(IEnumerable<ExcelPatient> patientsList)
         {
+            var correctPatients = new List<Patient>();
+            foreach (var patient in patientsList)
+            {
+                //1. Check Country
+                var countryCode = GetCountryCode(patient.Nacionalidad);
+                var randomRegion = GetRegion(countryCode);
+                if(countryCode == null)
+                    break;
+
+                //2. Cast Date
+                var doB = DateTime.ParseExact(patient.FechaNacimiento,"yyyy-MM-dd");
+                //3. Name se va como Tal
+                var name = patient.Nombre;
+                //4. Identificacion juega
+                var dni = patient.Identificación;
+
+                var new_patient = new Patient(){
+                    Dni = dni,
+                    Name = name,
+                    LastName = "",
+                    DoB = doB,
+                    Status = 2, // INFECTED
+                    Hospital_Id = 8,
+                    Region = randomRegion,
+                    Country = countryCode
+                };
+
+                _repository.Create(new_patient);
+                _repository.SaveChanges();    
+            }
+
             return Ok(patientsList);
         }
 
