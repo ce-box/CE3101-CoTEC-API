@@ -35,10 +35,15 @@ namespace CotecAPI.DataAccess.Repositories
             return _context.ContactedPersons.FirstOrDefault(c => c.Dni == Dni);
         }
 
+        public PersonsContactedByPatient Exist(string pDni,string cDni)
+        {
+            return _context.ContactedByPacients.FirstOrDefault(c => c.ContactDni == cDni && c.PatientDni == pDni);
+        }
+
         public ContactView GetByDni(string Dni)
         {
             var param = new SqlParameter("@contactDni",Dni); 
-            var contact =  _context.Set<ContactView>().FromSqlRaw("ContactSummary @contactDni",param).ToList();
+            var contact =  _context.Set<ContactView>().FromSqlRaw($"EXEC [ContactSummary] @contactDni={Dni}").ToList();
             return contact[0];
         }
 

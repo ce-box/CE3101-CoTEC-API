@@ -59,8 +59,8 @@ namespace CotecAPI.DataAccess.Repositories
 
         public IEnumerable<PathologyView> getContactPathology(string Dni)
         {
-            var param = new SqlParameter("@patientDni",Dni); 
-            var pathologies = _context.Set<PathologyView>().FromSqlRaw("PatientPathology @patientDni",param).ToList();
+            var param = new SqlParameter("@contactDni",Dni); 
+            var pathologies = _context.Set<PathologyView>().FromSqlRaw("ContactPathology @contactDni",param).ToList();
             return pathologies;
         }
 

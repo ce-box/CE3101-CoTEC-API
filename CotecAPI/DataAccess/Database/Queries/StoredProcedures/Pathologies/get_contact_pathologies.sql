@@ -2,8 +2,8 @@ USE COTEC_DB;
 GO
 
 -- Returns a List of all Pathologies that a Patient has
-ALTER PROCEDURE [PatientPathology]
-(@patientDni varchar(30))
+CREATE PROCEDURE [ContactPathology]
+(@contactDni varchar(30))
 AS
 BEGIN
     SELECT 
@@ -12,13 +12,13 @@ BEGIN
         P.Symptoms,
         P.Treatment
     FROM
-        PatientPathologies AS PP 
+        PersonPathologies AS PP 
         JOIN
         Pathologies AS P
         ON PP.PathologyName = P.Name
     WHERE
-        PP.PatientDni = @patientDni;
+        PP.PersonDni = @contactDni;
 END;
 GO
 
-EXEC dbo.PatientPathology @patientDni = 117561922;
+--EXEC dbo.ContactPathology @contactDni = '117561922';

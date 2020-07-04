@@ -25,17 +25,19 @@ namespace CotecAPI.Controllers
 
         [HttpPost]
         [Route("api/v1/contacts/new")]
-        public ActionResult<ContactedPerson> CreatePatient([FromQuery] string Dni, [FromBody] IEnumerable<ContactedPerson> contacts) 
+        public ActionResult<IEnumerable<ContactedPerson>> CreatePatient([FromQuery] string Dni, [FromBody] IEnumerable<ContactedPerson> contacts) 
         {
             foreach (var contact in contacts)
             {
                 var contactFromRepo = _repository.Exist(contact.Dni);
                 if(contactFromRepo == null) 
                     _repository.CreateContact(contact);
-                _repository.CreateContactRelationship(Dni,contact.Dni);    
+                var rel = _repository.Exist(Dni,contact.Dni);
+                if(rel == null) 
+                    _repository.CreateContactRelationship(Dni,contact.Dni);    
             }
             _repository.SaveChanges();
-
+            
             return Created("https://cotecapi.com/contacts",contacts);
         }
 
@@ -51,8 +53,11 @@ namespace CotecAPI.Controllers
         [Route("api/v1/contacts")]
         public ActionResult<ContactView> GetContactByDni([FromQuery] string Dni) {
             
-            var contacts = _repository.GetByDni(Dni);
-            return Ok(contacts);
+            var try_contacts = _repository.Exist(Dni);
+            if(try_contacts == null)
+                return NotFound();
+            var contact = _repository.GetByDni(Dni);
+            return Ok(contact);
         }
 
         [HttpPatch]

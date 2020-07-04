@@ -29,7 +29,7 @@ namespace CotecAPI.Controllers
         public ActionResult<PatientReadDTO> CreatePatient([FromBody] Patient pat) {
 
             //Check if patient exists
-            var patientFromRepo = _repository.GetByDni(pat.Dni);
+            var patientFromRepo = _repository.GetByDniRaw(pat.Dni);
             if (patientFromRepo != null)
                 return new BadRequestObjectResult(new { message = "Existing Entity", currentDate = DateTime.Now });
 
@@ -89,7 +89,7 @@ namespace CotecAPI.Controllers
         public ActionResult UpdatePatient([FromQuery]string Dni, [FromBody] Patient pat)
         {
             //Check if patient exists
-            var patientFromRepo = _repository.GetByDni(Dni);
+            var patientFromRepo = _repository.GetByDniRaw(Dni);
             if (patientFromRepo == null)
                 return NotFound();
             
@@ -104,12 +104,20 @@ namespace CotecAPI.Controllers
         public ActionResult DeletePatient([FromQuery] string Dni)
         {
             //Check if patient exists
-            var patientFromRepo = _repository.GetByDni(Dni);
+            var patientFromRepo = _repository.GetByDniRaw(Dni);
             if (patientFromRepo == null)
                 return NotFound();
             
             _repository.Delete(Dni);
             return NoContent();
+        }
+
+        /*****************************************/
+        [HttpPost]
+        [Route("api/v1/patients/excel")]
+        public ActionResult<IEnumerable<ExcelPatient>> AddFromExcel(IEnumerable<ExcelPatient> patientsList)
+        {
+            return Ok(patientsList);
         }
 
 

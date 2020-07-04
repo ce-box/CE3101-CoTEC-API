@@ -145,7 +145,5 @@ namespace CotecAPI.Controllers
             return NoContent();
         }
 
-        
-
     }
 }
