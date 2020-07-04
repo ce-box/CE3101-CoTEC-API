@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,24 +16,24 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // PatientDni
             entityBuilder.Property(pp => pp.PatientDni)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(30)
+                         .HasColumnType("varchar(30)")
                          .IsRequired();
                         
             // PathologyName
             entityBuilder.Property(pp => pp.PathologyName)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(50)
+                         .HasColumnType("varchar(50)")
                          .IsRequired();
 
             // Foreign Key
             entityBuilder.HasOne<Patient>(pp => pp.Patient)
                          .WithMany(cp => cp.Pathologies)
-                         .HasForeignKey(pp => pp.PatientDni);
+                         .HasForeignKey(pp => pp.PatientDni)
+                         .OnDelete(DeleteBehavior.NoAction);
 
             entityBuilder.HasOne<Pathology>(pp => pp.Pathology)
                          .WithMany(p => p.PatientPathologies)
-                         .HasForeignKey(pp => pp.PathologyName);
+                         .HasForeignKey(pp => pp.PathologyName)
+                         .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

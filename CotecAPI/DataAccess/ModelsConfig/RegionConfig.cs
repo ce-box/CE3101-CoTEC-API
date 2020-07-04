@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,14 +16,12 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Region Name
             entityBuilder.Property(r => r.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(50)
+                         .HasColumnType("varchar(50)")
                          .IsRequired();
 
             // Region CountryCode
             entityBuilder.Property(r => r.CountryCode)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(3)
+                         .HasColumnType("varchar(3)")
                          .IsRequired();
 
             // Foreign Key

@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,26 +16,22 @@ namespace CotecAPI.DataAccess.ModelsConfig
             
             // Name
             entityBuilder.Property(path => path.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(50)
+                         .HasColumnType("varchar(50)")
                          .IsRequired();
             
             // Symptoms
             entityBuilder.Property(path => path.Symptoms)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(255)
+                         .HasColumnType("varchar(255)")
                          .IsRequired();
 
             // Description
             entityBuilder.Property(path => path.Description)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(255)
+                         .HasColumnType("varchar(255)")
                          .IsRequired();
                         
             // Treatment
             entityBuilder.Property(path => path.Treatment)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(255)
+                         .HasColumnType("varchar(255)")
                          .IsRequired();
         }
     }

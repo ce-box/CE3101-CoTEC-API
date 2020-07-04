@@ -1,5 +1,6 @@
 using CotecAPI.DataAccess.ModelsConfig;
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
+using CotecAPI.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace CotecAPI.DataAccess.Database
@@ -74,6 +75,15 @@ namespace CotecAPI.DataAccess.Database
             PathologiesConfig.SetEntityBuilder(modelBuilder.Entity<Pathology>());
             Pharm_CompanyConfig.SetEntityBuilder(modelBuilder.Entity<PharmaceuticalCompany>());
             StatusConfig.SetEntityBuilder(modelBuilder.Entity<PatientStatus>());
+
+            // Views and Stored Procedures
+            modelBuilder.Entity<PatientView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<CasesView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<MeasureView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<MedicationView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<PatientMedicationView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<PathologyView>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ContactView>().HasNoKey().ToView(null);
 
         }
         

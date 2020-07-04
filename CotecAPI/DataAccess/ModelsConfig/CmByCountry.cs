@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -26,14 +26,12 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // CM Description
             entityBuilder.Property(c => c.Status)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(15)
+                         .HasColumnType("varchar(15)")
                          .IsRequired();
 
             // CM CountryCode
             entityBuilder.Property(c => c.CountryCode)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(3)
+                         .HasColumnType("varchar(3)")
                          .IsRequired();
 
             // CM MeasureId
@@ -44,11 +42,13 @@ namespace CotecAPI.DataAccess.ModelsConfig
             // Foreign Keys
             entityBuilder.HasOne<Country>(c => c.Country)
                          .WithMany(ctry => ctry.ImplementedContainmentMeasures)
-                         .HasForeignKey(c => c.CountryCode);
+                         .HasForeignKey(c => c.CountryCode)
+                         .OnDelete(DeleteBehavior.NoAction);
 
              entityBuilder.HasOne<ContainmentMeasure>(c => c.Measure)
                          .WithMany(m => m.ImplementedMeasures)
-                         .HasForeignKey(c => c.MeasureId);
+                         .HasForeignKey(c => c.MeasureId)
+                         .OnDelete(DeleteBehavior.NoAction);
             
 
         }

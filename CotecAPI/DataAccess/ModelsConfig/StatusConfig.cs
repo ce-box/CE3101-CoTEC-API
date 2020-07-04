@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,8 +22,7 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Name
             entityBuilder.Property(s => s.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
         }
     }

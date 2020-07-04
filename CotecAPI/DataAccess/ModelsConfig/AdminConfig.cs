@@ -1,4 +1,4 @@
-using CotecAPI.Models;
+using CotecAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,32 +16,27 @@ namespace CotecAPI.DataAccess.ModelsConfig
 
             // Admin Username
             entityBuilder.Property(a => a.Username)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
 
             // Admin Password
             entityBuilder.Property(a => a.Password)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
 
             // Admin Name
             entityBuilder.Property(a => a.Name)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
 
             // Admin LastName
             entityBuilder.Property(a => a.LastName)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(20)
+                         .HasColumnType("varchar(20)")
                          .IsRequired();
 
             // Admin CountryCode
             entityBuilder.Property(a => a.CountryCode)
-                         .HasColumnType("varchar")
-                         .HasMaxLength(3)
+                         .HasColumnType("varchar(3)")
                          .IsRequired();
 
             // Foreign Key
