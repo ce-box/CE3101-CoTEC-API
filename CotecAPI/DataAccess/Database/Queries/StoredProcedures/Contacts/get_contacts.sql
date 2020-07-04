@@ -25,3 +25,5 @@ BEGIN
         PC.PatientDni = @patientDni
 END;
 GO
+
+SELECT * FROM ContactedPersons;
