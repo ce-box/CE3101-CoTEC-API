@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,15 +30,12 @@ namespace CotecAPI
 
         
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
+            // Patch Serialization
             services.AddControllers().AddNewtonsoftJson(
                 s =>  {
                     s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
-            
-            // Add DbContexts
-            services.AddDbContext<CotecContext>(opt => opt.UseSqlServer
-                (Configuration.GetConnectionString("CotecConnection")));
 
             // Customize our CORS policy
             services.AddCors(o => o.AddPolicy(
@@ -47,23 +45,30 @@ namespace CotecAPI
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 }));
+
+            // DbContext Dependency Injection (CotecContext implements DbContext Interface)
+            services.AddDbContext<CotecContext>(opt => opt.UseSqlServer
+                (Configuration.GetConnectionString("CotecConnection")));
             
+            // Mapper Dependency Injection (Every class that implements Profile Interface)
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             
-            // TODO: Agregar las Inyecciones de Dependencias
-            services.AddScoped<CasesRepo>();
-            services.AddScoped<MeasuresRepo>();
+            // Repository Dependency injection
             services.AddScoped<UserRepo>();
 
+            services.AddScoped<CasesRepo>();
+            services.AddScoped<MeasuresRepo>();
             services.AddScoped<RegionRepo>();
+            
             services.AddScoped<StatusRepo>();
             services.AddScoped<HospitalRepo>();
-
             services.AddScoped<PatientRepo>();
             services.AddScoped<ContactRepo>();
+
             services.AddScoped<MedicationRepo>();
             services.AddScoped<PathologyRepo>();
+            
         }
 
         
