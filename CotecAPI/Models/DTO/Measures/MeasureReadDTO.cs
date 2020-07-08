@@ -1,6 +1,6 @@
 namespace CotecAPI.Models.DTO
 {
-    public class MeasureDTO
+    public class MeasureReadDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

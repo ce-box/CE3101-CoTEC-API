@@ -11,7 +11,7 @@ namespace CotecAPI.Models.Profiles
             // Source -> Target
             CreateMap<Region, RegionReadDTO>();
             CreateMap<RegionReadDTO, Region>();
-            CreateMap<Country, CountryDTO>();
+            CreateMap<Country, CountryReadDTO>();
         }
     }
 }

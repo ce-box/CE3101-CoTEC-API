@@ -9,12 +9,12 @@ namespace CotecAPI.Models.Profiles
         public MeasuresProfile()
         {
             // Source -> Target
-            CreateMap<SanitaryMeasure, MeasureDTO>();
+            CreateMap<SanitaryMeasure, MeasureReadDTO>();
             CreateMap<SanitaryMeasure, MeasureUpdateDTO>();
             CreateMap<MeasureUpdateDTO, SanitaryMeasure>();
 
-            CreateMap<CountrySanitaryMeasures, C_MeasureUpdateDTO>();
-            CreateMap<C_MeasureUpdateDTO, CountrySanitaryMeasures>();
+            CreateMap<CountrySanitaryMeasures, ImplementedMeasureUpdateDTO>();
+            CreateMap<ImplementedMeasureUpdateDTO, CountrySanitaryMeasures>();
             
         }
     }

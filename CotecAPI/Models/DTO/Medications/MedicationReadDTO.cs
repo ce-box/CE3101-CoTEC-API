@@ -1,6 +1,6 @@
 namespace CotecAPI.Models.DTO
 {
-    public class MedicationDTO
+    public class MedicationReadDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

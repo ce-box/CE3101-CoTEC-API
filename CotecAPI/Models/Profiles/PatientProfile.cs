@@ -1,5 +1,6 @@
 using AutoMapper;
 using CotecAPI.Models.DTO;
+using CotecAPI.Models.DTO.Patient;
 using CotecAPI.Models.Entities;
 
 namespace CotecAPI.Models.Profiles
@@ -10,7 +11,8 @@ namespace CotecAPI.Models.Profiles
         {
             // Source -> Target
             CreateMap<Patient, PatientReadDTO>();
+            CreateMap<PatientUpdateDTO, Patient>();
+            CreateMap<Patient, PatientUpdateDTO >();
         }
-        
     }
 }

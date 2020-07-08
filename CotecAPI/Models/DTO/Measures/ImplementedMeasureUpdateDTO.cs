@@ -2,7 +2,7 @@ using System;
 
 namespace CotecAPI.Models.DTO
 {
-    public class C_MeasureUpdateDTO
+    public class ImplementedMeasureUpdateDTO
     {
         public string Status { get; set; }
         public DateTime StartDate { get; set; }
