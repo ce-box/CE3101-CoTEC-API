@@ -77,7 +77,7 @@ namespace CotecAPI.Controllers
         /// </summary>
         /// <returns>JSON with a list of countries, and in each country comes a breakdown of the date 
         /// and new infected and dead of that day (For a week)</returns>
-        /// GET: api/v1/cases/country/report
+        /// GET: api/v1/cases/report
         [HttpGet]
         [Route("api/v1/cases/report")]
         public ActionResult<CasesView> GetWeeklyReport() 

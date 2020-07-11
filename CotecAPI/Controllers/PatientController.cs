@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using AutoMapper;
 using CotecAPI.Models.DTO;
+using Microsoft.AspNetCore.JsonPatch;
+using CotecAPI.Models.DTO.Patient;
 
 namespace CotecAPI.Controllers
 {
@@ -84,16 +86,21 @@ namespace CotecAPI.Controllers
             return NotFound();
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("api/v1/patients/edit")]
-        public ActionResult UpdatePatient([FromQuery]string Dni, [FromBody] Patient pat)
+        public ActionResult UpdatePatient([FromQuery]string Dni, JsonPatchDocument<PatientUpdateDTO> patchDoc)
         {
             //Check if patient exists
             var patientFromRepo = _repository.GetByDniRaw(Dni);
             if (patientFromRepo == null)
                 return NotFound();
             
-            _repository.Update(pat);
+            var patToPatch = _mapper.Map<PatientUpdateDTO>(patientFromRepo);
+            patchDoc.ApplyTo(patToPatch,ModelState);
+
+            _mapper.Map(patToPatch,patientFromRepo);
+            
+            _repository.Update(patientFromRepo);
             _repository.SaveChanges();
             
             return NoContent();
@@ -113,6 +120,7 @@ namespace CotecAPI.Controllers
         }
 
         /*****************************************/
+        /*
         [HttpPost]
         [Route("api/v1/patients/excel")]
         public ActionResult<IEnumerable<ExcelPatient>> AddFromExcel(IEnumerable<ExcelPatient> patientsList)
@@ -149,7 +157,7 @@ namespace CotecAPI.Controllers
             }
 
             return Ok(patientsList);
-        }
+        }*/
 
 
     }
