@@ -23,22 +23,42 @@ namespace CotecAPI.DataAccess.Repositories
                            READ METHODS 
            -------------------------------------------*/
         
+        /// <summary>
+        /// Obtains all the sanitary measures registered in the database.
+        /// </summary>
+        /// <returns>List of Sanitary Measures.</returns>
         public IEnumerable<SanitaryMeasure> GetMeasures()
         {
             return _context.S_Measures.ToList();
         }
 
-        public SanitaryMeasure GetById(int Id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public SanitaryMeasure GetMeasureById(int Id)
         {
             return _context.S_Measures.FirstOrDefault(sm => sm.Id == Id);
         }
 
-        public CountrySanitaryMeasures GetById(int m_id, string c_code)
+        /// <summary>
+        /// Gets the detail of a measure given its ID.
+        /// </summary>
+        /// <param name="measureId">Id of the measure.</param>
+        /// <param name="countryCode">Country code in alpha-3 format. </param>
+        /// <returns>Specified Sanitary Measure.</returns>
+        public CountrySanitaryMeasures GetSpecificImplementedCountryMeasure(int measureId, string countryCode)
         {
-            return _context.SM_ByCountry.FirstOrDefault(sm => sm.MeasureId == m_id && sm.CountryCode == c_code);
+            return _context.SM_ByCountry.FirstOrDefault(sm => sm.MeasureId == measureId && sm.CountryCode == countryCode);
         }
 
-        public IEnumerable<MeasureView> GetSanitaryMeasures([FromQuery] string CountryCode)
+        /// <summary>
+        /// Obtain all the sanitary measures that a country has implemented.
+        /// </summary>
+        /// <param name="CountryCode">Country code in alpha-3 format. </param>
+        /// <returns>List of Sanitary Measures.</returns>
+        public IEnumerable<MeasureView> GetCountrySanitaryMeasures([FromQuery] string CountryCode)
         {   
             // TODO: Connect w/DB Context
             // Mock Inf@
@@ -47,7 +67,12 @@ namespace CotecAPI.DataAccess.Repositories
             return measures;
         }
 
-         public IEnumerable<MeasureView> GetActiveSanitaryMeasures([FromQuery] string CountryCode)
+        /// <summary>
+        /// Get all the sanitary measures that are active in a country.
+        /// </summary>
+        /// <param name="CountryCode">Country code in alpha-3 format. </param>
+        /// <returns>List of Sanitary Measures.</returns>
+         public IEnumerable<MeasureView> GetActiveSanitaryMeasuresByCountry([FromQuery] string CountryCode)
         {   
             // TODO: Connect w/DB Context
             // Mock Inf@
@@ -59,48 +84,75 @@ namespace CotecAPI.DataAccess.Repositories
         /* -------------------------------------------
                         CREATE METHODS 
            -------------------------------------------*/
-
-        public void CreateSanitaryMeasure(SanitaryMeasure sm)
+        
+        /// <summary>
+        /// Add a new sanitary measure to the database.
+        /// </summary>
+        /// <param name="newSanitaryMeasure">Sanitary measure to add.</param>
+        public void CreateSanitaryMeasure(SanitaryMeasure newSanitaryMeasure)
         {
-            _context.S_Measures.Add(sm);
+            _context.S_Measures.Add(newSanitaryMeasure);
         }
 
-        public void AssingSanitaryMeasure(CountrySanitaryMeasures csm)
+        /// <summary>
+        /// Assign a sanitary measure to a country.
+        /// </summary>
+        /// <param name="countrySanitaryMeasure">Sanitary Measure to be assigned. </param>
+        public void AssingSanitaryMeasure(CountrySanitaryMeasures countrySanitaryMeasure)
         {
-            _context.SM_ByCountry.Add(csm);
+            _context.SM_ByCountry.Add(countrySanitaryMeasure);
         }
 
         /* -------------------------------------------
                         DELETE METHODS 
            -------------------------------------------*/
         
-        public void DeleteSanitaryMeasure(SanitaryMeasure sm)
+        /// <summary>
+        /// Delete a sanitary measure from the database.
+        /// Warning: It is not removed, but changes the status of all deployments of the measure to inactive.
+        /// </summary>
+        /// <param name="sanitaryMeasure">Sanitary Measure to delete.</param>
+        public void DeleteSanitaryMeasure(SanitaryMeasure sanitaryMeasure)
         {
-            _context.S_Measures.Remove(sm);
+            _context.S_Measures.Remove(sanitaryMeasure);
         }
 
-        public void DeleteCountrySanitaryMeasure(CountrySanitaryMeasures sm)
+        /// <summary>
+        /// Eliminates a sanitary measure implementation.
+        /// Warning: It does not delete it, but changes its status to inactive.
+        /// </summary>
+        /// <param name="countrySanitaryMeasure">Implemented measure to delete.</param>
+        public void DeleteCountrySanitaryMeasure(CountrySanitaryMeasures countrySanitaryMeasure)
         {
-            _context.SM_ByCountry.Remove(sm);
+            _context.SM_ByCountry.Remove(countrySanitaryMeasure);
         }
 
         /* -------------------------------------------
                         UPDATE METHODS 
            -------------------------------------------*/
         
-        public void UpdateSanitaryMeasure(CountrySanitaryMeasures csm)
+        /// <summary>
+        /// Lets you edit an implemented sanitary measure.
+        /// </summary>
+        /// <param name="countrySanitaryMeasure">Implemented Sanitary Measure to Edit.</param>
+        public void UpdateSanitaryMeasure(CountrySanitaryMeasures countrySanitaryMeasure)
         {
             // Nothing
         }
 
-        public void UpdateSanitaryMeasure(SanitaryMeasure csm)
+        /// <summary>
+        /// Lets you edit a sanitary measure.
+        /// </summary>
+        /// <param name="sanitaryMeasure">Sanitary Measure to Edit.</param>
+        public void UpdateSanitaryMeasure(SanitaryMeasure sanitaryMeasure)
         {
             // Nothing
         }
 
-        /**         
-         * Save the changes made to the database
-         */
+        /// <summary>
+        /// Saves all changes made to the database after a transaction.
+        /// </summary>
+        /// <returns>True if the changes were saved successfully, false if an error occurs.</returns>
         public bool SaveChanges()
         {
             return ( _context.SaveChanges() >= 0);

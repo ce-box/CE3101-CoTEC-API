@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace CotecAPI.Controllers
 {
+    /// <summary>
+    /// This microservice allows to create, modify and eliminate Hospitals.
+    /// </summary>
     public class HospitalController : ControllerBase
     {
         private readonly HospitalRepo _repository;

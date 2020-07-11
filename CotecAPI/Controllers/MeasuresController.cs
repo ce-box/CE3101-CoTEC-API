@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CotecAPI.Controllers
 {
+    /// <summary>
+    /// This microservice allows to create, modify and eliminate the sanitary measures created for the containment of the CoTEC virus. 
+    /// It also allows assigning measures to countries, editing their status (active or inactive) and assigning the start 
+    /// and end dates of the measures.
+    /// </summary>
     [ApiController]
     public class MeasuresController : ControllerBase
     {
@@ -21,46 +26,70 @@ namespace CotecAPI.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sm"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/v1/measures/new")]
-        public ActionResult<MeasureDTO> CreateSanitaryMeasure([FromBody] SanitaryMeasure sm)
+        public ActionResult<MeasureReadDTO> CreateSanitaryMeasure([FromBody] SanitaryMeasure sm)
         {
             _repository.CreateSanitaryMeasure(sm);
             _repository.SaveChanges();
 
-            var measure = _mapper.Map<MeasureDTO>(sm);
+            var measure = _mapper.Map<MeasureReadDTO>(sm);
             return Created("https://cotecapi.com/measures",measure);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/v1/measures/all")]
-        public ActionResult<IEnumerable<MeasureDTO>> GetAllSanitaryMeasures()
+        public ActionResult<IEnumerable<MeasureReadDTO>> GetAllSanitaryMeasures()
         {
             var measures = _repository.GetMeasures();
             
-            return Ok(_mapper.Map<IEnumerable<MeasureDTO>>(measures));
+            return Ok(_mapper.Map<IEnumerable<MeasureReadDTO>>(measures));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="CountryCode"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/v1/measures/country")]
         public ActionResult<IEnumerable<MeasureView>> GetSanitaryMeasures([FromQuery] string CountryCode)
         {
-            var measures = _repository.GetSanitaryMeasures(CountryCode);
+            var measures = _repository.GetCountrySanitaryMeasures(CountryCode);
             if(measures!= null)
                 return Ok(measures);
             return NotFound();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="CountryCode"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/v1/measures/sanitary")]
         public ActionResult<IEnumerable<MeasureView>> GetSanitaryMeasuresv2([FromQuery] string CountryCode)
         {
-            var measures = _repository.GetActiveSanitaryMeasures(CountryCode);
+            var measures = _repository.GetActiveSanitaryMeasuresByCountry(CountryCode);
             if(measures!= null)
                 return Ok(measures);
             return NotFound();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="csm"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/v1/measures/assign")]
         public ActionResult<CountrySanitaryMeasures> AssignSanitaryMeasure([FromBody] CountrySanitaryMeasures csm)
@@ -72,12 +101,18 @@ namespace CotecAPI.Controllers
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="patchDoc"></param>
+        /// <returns></returns>
         [HttpPatch]
         [Route("api/v1/measures/edit")]
         public ActionResult EditMeasure([FromQuery] int Id,JsonPatchDocument<MeasureUpdateDTO> patchDoc)
         {
             // Check if exists
-            var measureFromRepo = _repository.GetById(Id);
+            var measureFromRepo = _repository.GetMeasureById(Id);
             if(measureFromRepo == null)
                 return NotFound();
             
@@ -95,16 +130,23 @@ namespace CotecAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Country"></param>
+        /// <param name="patchDoc"></param>
+        /// <returns></returns>
         [HttpPatch]
         [Route("api/v1/measures/country/edit")]
-        public ActionResult EditMeasure([FromQuery] int Id, [FromQuery] string Country ,JsonPatchDocument<C_MeasureUpdateDTO> patchDoc)
+        public ActionResult EditMeasure([FromQuery] int Id, [FromQuery] string Country ,JsonPatchDocument<ImplementedMeasureUpdateDTO> patchDoc)
         {
             // Check if exists
-            var measureFromRepo = _repository.GetById(Id,Country);
+            var measureFromRepo = _repository.GetSpecificImplementedCountryMeasure(Id,Country);
             if(measureFromRepo == null)
                 return NotFound();
             
-            var measureToPatch = _mapper.Map<C_MeasureUpdateDTO>(measureFromRepo);
+            var measureToPatch = _mapper.Map<ImplementedMeasureUpdateDTO>(measureFromRepo);
             patchDoc.ApplyTo(measureToPatch, ModelState);
 
             if (!TryValidateModel(measureToPatch))
@@ -118,12 +160,18 @@ namespace CotecAPI.Controllers
             return NoContent();
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Country"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("api/v1/measures/country/delete")]
         public ActionResult DeleteCountrySanitaryMeasure([FromQuery] int Id, [FromQuery] string Country)
         {
             //TODO: Validations and repo conection
-            var measure = _repository.GetById(Id, Country);
+            var measure = _repository.GetSpecificImplementedCountryMeasure(Id, Country);
             if(measure == null)
                 return NotFound();
             
@@ -133,12 +181,17 @@ namespace CotecAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("api/v1/measures/delete")]
         public ActionResult DeleteSanitaryMeasure([FromQuery] int id)
         {
             //TODO: Validations and repo conection
-            var measure = _repository.GetById(id);
+            var measure = _repository.GetMeasureById(id);
             if(measure == null)
                 return NotFound();
             
