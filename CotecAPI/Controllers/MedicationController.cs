@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace CotecAPI.Controllers
 {
+    /// <summary>
+    /// This microservice allows you to create, edit, delete and assign medicines and medications.
+    /// </summary>
     [ApiController]
     public class MedicationController : ControllerBase
     {
@@ -25,6 +28,10 @@ namespace CotecAPI.Controllers
                     MEDICATIONS     
          *--------------------------------*/
 
+        /// <summary>
+        /// It allows to obtain the list of all medications in the database.
+        /// </summary>
+        /// <returns> Medication List</returns>
         [HttpGet]
         [Route("api/v1/medications/all")]
         public ActionResult<IEnumerable<MedicationView>> GetMedicationList()
@@ -33,6 +40,10 @@ namespace CotecAPI.Controllers
             return Ok(medications);
         }
 
+        /// <summary>
+        /// It allows obtaining the list of all the registered pharmaceutical companies.
+        /// </summary>
+        /// <returns>list of pharmaceutical companies.</returns>
         [HttpGet]
         [Route("api/v1/medications/companies")]
         public ActionResult<IEnumerable<PharmCoDTO>> GetCompaniesList()
@@ -41,23 +52,34 @@ namespace CotecAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<PharmCoDTO>>(companies));
         }
 
+        /// <summary>
+        /// Create a medication and add it to the database.
+        /// </summary>
+        /// <param name="med">Medication to be added.</param>
+        /// <returns>Added medication.</returns>
         [HttpPost]
         [Route("api/v1/medications/new")]
-        public ActionResult<MedicationDTO> CreateMedication([FromBody] Medication med)
+        public ActionResult<MedicationReadDTO> CreateMedication([FromBody] Medication med)
         {
             _repository.CreateMedication(med);
             _repository.SaveChanges();
 
-            var medication = _mapper.Map<MedicationDTO>(med);
+            var medication = _mapper.Map<MedicationReadDTO>(med);
             return Created("https://cotecapi.com/medications",medication);
         }
 
+        /// <summary>
+        /// Allows you to edit the information of a medicine.
+        /// </summary>
+        /// <param name="Id">Medication identification code. </param>
+        /// <param name="patchDoc">Patch document with the edited data.</param>
+        /// <returns>No Content</returns>
         [HttpPatch]
         [Route("api/v1/medications/edit")]
         public ActionResult UpdateMedication([FromQuery] int Id,JsonPatchDocument<MedicationUpdateDTO> patchDoc)
         {
             // Check if exists
-            var medFromRepo = _repository.Exist(Id);
+            var medFromRepo = _repository.ExistMedications(Id);
             if(medFromRepo == null)
                 return NotFound();
             
@@ -69,17 +91,22 @@ namespace CotecAPI.Controllers
             
             _mapper.Map(medToPatch, medFromRepo);
 
-            _repository.UpdateMedications(medFromRepo);
+            _repository.UpdateMedication(medFromRepo);
             _repository.SaveChanges();
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Allows you to delete a medicine.
+        /// </summary>
+        /// <param name="Id">Medication identification code. </param>
+        /// <returns>No Content</returns>
         [HttpDelete]
         [Route("api/v1/medications/delete")]
         public ActionResult DeleteMedication([FromQuery] int Id)
         {
-            var medication = _repository.Exist(Id);
+            var medication = _repository.ExistMedications(Id);
             if(medication == null)
                 return NotFound();
 
@@ -93,6 +120,11 @@ namespace CotecAPI.Controllers
                 ENTITY MEDICATIONS     
          *--------------------------------*/
 
+        /// <summary>
+        /// It allows to obtain all the medications of a patient.
+        /// </summary>
+        /// <param name="Dni">Patient identification number.</param>
+        /// <returns>Medication List. </returns>
         [HttpGet]
         [Route("api/v1/medications/patient")]
         public ActionResult<IEnumerable<PatientMedicationView>> GetPatientMedication([FromQuery] string Dni)
@@ -101,6 +133,11 @@ namespace CotecAPI.Controllers
             return Ok(medications);
         }    
 
+        /// <summary>
+        /// Allows you to assign a medication to a patient.
+        /// </summary>
+        /// <param name="p_med">new Patient Medication </param>
+        /// <returns>Detail of the assigned medication.</returns>
         [HttpPost]
         [Route("api/v1/medications/patient/assign")]
         public ActionResult<PatientMedications> AssignMedication([FromBody] PatientMedications p_med) 
@@ -111,9 +148,14 @@ namespace CotecAPI.Controllers
             return Created("https://cotecapi.com/medications",p_med);
         } 
 
+        /// <summary>
+        /// Allows you to assign a list of medications to a patient.
+        /// </summary>
+        /// <param name="p_med"> new Patient Medication List</param>
+        /// <returns>Detail of the assigned medications.</returns>
         [HttpPost]
         [Route("api/v1/medications/patient/assign/list")]
-        public ActionResult<IEnumerable<PatientMedications>> AssignMedication([FromBody] IEnumerable<PatientMedications> p_med) 
+        public ActionResult<IEnumerable<PatientMedications>> AssignMedications([FromBody] IEnumerable<PatientMedications> p_med) 
         {
             _repository.AssociateMedications(p_med);
             _repository.SaveChanges();
@@ -121,9 +163,15 @@ namespace CotecAPI.Controllers
             return Created("https://cotecapi.com/medications",p_med);
         }
 
+        /// <summary>
+        /// Allows you to remove a medication from a patient's medication list.
+        /// </summary>
+        /// <param name="Dni">Patient identification number.</param>
+        /// <param name="MedicationId">Medication identification code. </param>
+        /// <returns>No Content</returns>
         [HttpDelete]
         [Route("api/v1/medications/patient/delete")]
-        public ActionResult AssignMedication([FromQuery] string Dni, [FromQuery] int MedicationId) 
+        public ActionResult DeletePatientMedication([FromQuery] string Dni, [FromQuery] int MedicationId) 
         {   
      
             _repository.DeletePatientMedication(Dni, MedicationId);
