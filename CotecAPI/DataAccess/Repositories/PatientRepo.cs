@@ -23,12 +23,12 @@ namespace CotecAPI.DataAccess.Repositories
                         CRUD METHODS 
            -------------------------------------------*/
 
-        /**         
-         * Create a new patient by adding it to the database. 
-         * The admission of a patient creates a new case event in the patient's country.
-         * @param patient 
-         */
-        public void Create(Patient patient)
+        /// <summary>
+        /// reate a new patient by adding it to the database. 
+        /// The admission of a patient creates a new case event in the patient's country.
+        /// </summary>
+        /// <param name="patient"> new Patient.</param>
+        public void CreatePatient(Patient patient)
         {
             if(patient == null)
                 throw new System.ArgumentNullException(nameof(patient));
@@ -36,11 +36,11 @@ namespace CotecAPI.DataAccess.Repositories
             _context.Patients.Add(patient);
         }
 
-        /**         
-         * Create new patiens from a list by adding it to the database. 
-         * The admission of a patient creates a new case event in the patient's country.
-         * @param patient 
-         */
+         /// <summary>
+         /// Create new patiens from a list by adding it to the database. 
+         /// The admission of a patient creates a new case event in the patient's country.
+         /// </summary>
+         /// <param name="patients"> Patients List.</param>
         public void CreatePatients(IEnumerable<Patient> patients)
         {
             if(patients == null)
@@ -49,19 +49,21 @@ namespace CotecAPI.DataAccess.Repositories
             _context.Patients.AddRange(patients);
         }
 
-        /**         
-         * Delete a patient from the database.
-         * @param patient 
-         */
-        public void Delete(string Dni)
+
+        /// <summary>
+        /// Delete a patient from the database.
+        /// </summary>
+        /// <param name="Dni"> Patient Dni.</param>
+        public void DeletePatient(string Dni)
         {
             _context.Database.ExecuteSqlRaw($"DELETE FROM Patients WHERE Dni={Dni}");
         }
 
-        /**         
-         * Get a view of all registered patients in a hospital
-         * @param hospital_Id 
-         */
+        /// <summary>
+        /// Get a view of all registered patients in a hospital.
+        /// </summary>
+        /// <param name="hospital_Id"> Hospital Id. </param>
+        /// <returns> Patients List. </returns>
         public IEnumerable<PatientView> GetAll(int hospital_Id)
         {
             var param = new SqlParameter("@Hospital_Id",hospital_Id); 
@@ -69,42 +71,65 @@ namespace CotecAPI.DataAccess.Repositories
             return patients;
         }
         
-        /**         
-         * Returns a patient given their ID
-         * @param Dni 
-         */
-        public PatientView GetByDni(string Dni)
+        /// <summary>
+        /// Returns a patient given their ID
+        /// </summary>
+        /// <param name="Dni">Patient Dni.</param>
+        /// <returns>Required Patient.</returns>
+        public PatientView GetPatientByDni(string Dni)
         {
             var param = new SqlParameter("@patientDni",Dni); 
             var patient =  _context.Set<PatientView>().FromSqlRaw("PatientSummary @patientDni",param).ToList();
             return patient[0];
         }
 
-        /**         
-         * Returns a raw patient given their ID
-         * @param Dni 
-         */
-        public Patient GetByDniRaw(string Dni)
+        /// <summary>
+        /// Returns a raw patient given their Dni.
+        /// </summary>
+        /// <param name="Dni">Patient Dni.</param>
+        /// <returns>Required Patient. </returns>
+        public Patient GetPatientByDniRaw(string Dni)
         {
             return _context.Patients.FirstOrDefault(p => p.Dni == Dni);
         }
 
-        /**         
-         * Save the changes made to the database
-         */
+        /// <summary>
+        /// Update properties of a patient. If your status changes to RECOVERED or DEAD, 
+        /// a new event associated with the patient's country is entered.
+        /// </summary>
+        /// <param name="patient"> Patient to Edit</param>
+        public void UpdatePatient(Patient patient)
+        {  
+            _context.Patients.Update(patient);
+        }
+
+        /// <summary>
+        /// Return all the Countries in the database
+        /// </summary>
+        /// <returns>Country List</returns>
+        public List<Country> GetCountries()
+        {
+            return _context.Countries.ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Country"></param>
+        /// <returns></returns>
+        public List<Region> GetRegions(string Country)
+        {
+            var regions = _context.Regions.Where(r => r.CountryCode==Country).ToList();
+            return regions;
+        }
+
+        /// <summary>
+        /// Saves all changes made to the database after a transaction.
+        /// </summary>
+        /// <returns>True if the changes were saved successfully, false if an error occurs.</returns>
         public bool SaveChanges()
         {
             return ( _context.SaveChanges() >= 0);
-        }
-
-        /**         
-         * Update properties of a patient. If your status changes to RECOVERED or DEAD, 
-         * a new event associated with the patient's country is entered.
-         * @param patient 
-         */
-        public void Update(Patient patient)
-        {  
-            _context.Patients.Update(patient);
         }
 
     }

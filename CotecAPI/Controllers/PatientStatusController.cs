@@ -31,7 +31,7 @@ namespace CotecAPI.Controllers
 
         [HttpPost]
         [Route("api/v1/status/new")]
-        public ActionResult<StatusReadDTO> CreateStatus([FromBody] StatusDTO stDTO)
+        public ActionResult<StatusReadDTO> CreateStatus([FromBody] StatusUpdateDTO stDTO)
         {
             PatientStatus p_st = _mapper.Map<PatientStatus>(stDTO);
             
@@ -43,14 +43,14 @@ namespace CotecAPI.Controllers
 
         [HttpPatch]
         [Route("api/v1/status/edit")]
-        public ActionResult UpdatePathology([FromQuery] int Id,JsonPatchDocument<StatusDTO> patchDoc)
+        public ActionResult UpdatePathology([FromQuery] int Id,JsonPatchDocument<StatusUpdateDTO> patchDoc)
         {
             // Check if exists
             var statusFromRepo = _repository.Exist(Id);
             if(statusFromRepo == null)
                 return NotFound();
             
-            var statusToPatch = _mapper.Map<StatusDTO>(statusFromRepo);
+            var statusToPatch = _mapper.Map<StatusUpdateDTO>(statusFromRepo);
             patchDoc.ApplyTo(statusToPatch, ModelState);
 
             if (!TryValidateModel(statusToPatch))

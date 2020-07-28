@@ -30,3 +30,25 @@ VALUES
     ('juan.ilama','passme','Juan','Ilama','1'),
     ('roy.urena','passme','Roy','Ureña','1');
 
+-- Insert Employees
+INSERT INTO HospitalEmployees
+(
+    Username,
+    [Password],
+    [Name],
+    LastName,
+    Hospital_Id )
+VALUES
+    ('onu.hospital','passme','Frodo','Bolsón',8),
+    ('usa.hospital','passme','Jaime','Altozano',9),
+    ('mex.hospital','passme','Ester','Rojas',10),
+    ('esp.hospital','passme','Juan','Ilama',11),
+    ('fra.hospital','passme','Juan','Ilama',12),
+    ('uk.hospital','passme','Juan','Ilama',13),
+    ('ptr.hospital','passme','Juan','Ilama',14),
+    ('ita.hospital','passme','Juan','Ilama',15),
+    ('chn.hospital','passme','Juan','Ilama',16),
+    ('rus.hospital','passme','Juan','Ilama',17);
+UPDATE Countries 
+SET Name = 'United States'
+WHERE Code = 'USA';

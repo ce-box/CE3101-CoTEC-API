@@ -18,6 +18,6 @@ BEGIN
         INSERTED AS I 
 
     -- Notify Contact By Email
-    EXEC ContactRelation @ContactDni=@contactDni, @PatientDni=@patientDni;
+    EXEC ContactRelation @ContactDni= @contactDni, @PatientDni= @patientDni;
 END
 GO

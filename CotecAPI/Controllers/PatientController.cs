@@ -11,7 +11,9 @@ using CotecAPI.Models.DTO.Patient;
 
 namespace CotecAPI.Controllers
 {
-    
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     public class PatientController : ControllerBase
     {
@@ -24,42 +26,44 @@ namespace CotecAPI.Controllers
             _mapper = mapper;
         }
 
-        
 
         [HttpPost]
         [Route("api/v1/patients/new")]
-        public ActionResult<PatientReadDTO> CreatePatient([FromBody] Patient pat) {
+        public ActionResult<PatientReadDTO> CreatePatient([FromBody] Patient pat)
+        {
 
             //Check if patient exists
-            var patientFromRepo = _repository.GetByDniRaw(pat.Dni);
+            var patientFromRepo = _repository.GetPatientByDniRaw(pat.Dni);
             if (patientFromRepo != null)
                 return new BadRequestObjectResult(new { message = "Existing Entity", currentDate = DateTime.Now });
 
-            _repository.Create(pat);
+            _repository.CreatePatient(pat);
             _repository.SaveChanges();
 
             var patient = _mapper.Map<PatientReadDTO>(pat);
-            return Created("https://cotecapi.com/patients",patient);
+            return Created("https://cotecapi.com/patients", patient);
         }
 
-        
+
 
         [HttpPost]
         [Route("api/v1/patients/new/list")]
-        public ActionResult<IEnumerable<PatientReadDTO>> CreatePatients([FromBody] IEnumerable<Patient> pat) {
-            
+        public ActionResult<IEnumerable<PatientReadDTO>> CreatePatients([FromBody] IEnumerable<Patient> pat)
+        {
+
             _repository.CreatePatients(pat);
             _repository.SaveChanges();
 
             var patients = _mapper.Map<IEnumerable<PatientReadDTO>>(pat);
 
-            return Created("https://cotecapi.com/patients",patients);
+            return Created("https://cotecapi.com/patients", patients);
         }
 
         [HttpGet]
         [Route("api/v1/patients")]
-        public ActionResult<PatientView> GetPatientByDni([FromQuery] string Dni) {
-            var patientItem = _repository.GetByDni(Dni);
+        public ActionResult<PatientView> GetPatientByDni([FromQuery] string Dni)
+        {
+            var patientItem = _repository.GetPatientByDni(Dni);
             if (patientItem != null)
                 return Ok(patientItem);
 
@@ -68,17 +72,19 @@ namespace CotecAPI.Controllers
 
         [HttpGet]
         [Route("api/v1/patients/raw")]
-        public ActionResult<Patient> GetPatientByDniRaw([FromQuery] string Dni) {
-            var patientItem = _repository.GetByDniRaw(Dni);
+        public ActionResult<Patient> GetPatientByDniRaw([FromQuery] string Dni)
+        {
+            var patientItem = _repository.GetPatientByDniRaw(Dni);
             if (patientItem != null)
                 return Ok(patientItem);
 
             return NotFound();
         }
-        
+
         [HttpGet]
         [Route("api/v1/patients/hospital")] // Patients in hospital
-        public ActionResult<IEnumerable<PatientView>> GetAllPatients([FromQuery] int hospital_Id) {
+        public ActionResult<IEnumerable<PatientView>> GetAllPatients([FromQuery] int hospital_Id)
+        {
             var patientItem = _repository.GetAll(hospital_Id);
             if (patientItem != null)
                 return Ok(patientItem);
@@ -88,21 +94,21 @@ namespace CotecAPI.Controllers
 
         [HttpPatch]
         [Route("api/v1/patients/edit")]
-        public ActionResult UpdatePatient([FromQuery]string Dni, JsonPatchDocument<PatientUpdateDTO> patchDoc)
+        public ActionResult UpdatePatient([FromQuery] string Dni, JsonPatchDocument<PatientUpdateDTO> patchDoc)
         {
             //Check if patient exists
-            var patientFromRepo = _repository.GetByDniRaw(Dni);
+            var patientFromRepo = _repository.GetPatientByDniRaw(Dni);
             if (patientFromRepo == null)
                 return NotFound();
-            
-            var patToPatch = _mapper.Map<PatientUpdateDTO>(patientFromRepo);
-            patchDoc.ApplyTo(patToPatch,ModelState);
 
-            _mapper.Map(patToPatch,patientFromRepo);
-            
-            _repository.Update(patientFromRepo);
+            var patToPatch = _mapper.Map<PatientUpdateDTO>(patientFromRepo);
+            patchDoc.ApplyTo(patToPatch, ModelState);
+
+            _mapper.Map(patToPatch, patientFromRepo);
+
+            _repository.UpdatePatient(patientFromRepo);
             _repository.SaveChanges();
-            
+
             return NoContent();
         }
 
@@ -111,53 +117,73 @@ namespace CotecAPI.Controllers
         public ActionResult DeletePatient([FromQuery] string Dni)
         {
             //Check if patient exists
-            var patientFromRepo = _repository.GetByDniRaw(Dni);
+            var patientFromRepo = _repository.GetPatientByDniRaw(Dni);
             if (patientFromRepo == null)
                 return NotFound();
-            
-            _repository.Delete(Dni);
+
+            _repository.DeletePatient(Dni);
             return NoContent();
         }
 
-        /*****************************************/
-        /*
+
         [HttpPost]
         [Route("api/v1/patients/excel")]
-        public ActionResult<IEnumerable<ExcelPatient>> AddFromExcel(IEnumerable<ExcelPatient> patientsList)
+        public ActionResult<IEnumerable<Patient>> AddFromExcel([FromBody] IEnumerable<ExcelPatient> patientsList)
         {
+            var countryList = _repository.GetCountries();
             var correctPatients = new List<Patient>();
+
             foreach (var patient in patientsList)
             {
                 //1. Check Country
-                var countryCode = GetCountryCode(patient.Nacionalidad);
-                var randomRegion = GetRegion(countryCode);
-                if(countryCode == null)
-                    break;
 
-                //2. Cast Date
-                var doB = DateTime.ParseExact(patient.FechaNacimiento,"yyyy-MM-dd");
-                //3. Name se va como Tal
-                var name = patient.Nombre;
-                //4. Identificacion juega
-                var dni = patient.Identificación;
+                var country = countryList.Find(c => c.Name == patient.Nacionalidad);
+                if (country != null)
+                {// Does not accepted
 
-                var new_patient = new Patient(){
-                    Dni = dni,
-                    Name = name,
-                    LastName = "",
-                    DoB = doB,
-                    Status = 2, // INFECTED
-                    Hospital_Id = 8,
-                    Region = randomRegion,
-                    Country = countryCode
-                };
+                    //1.2. Country Code and region
+                    var patientCountry = country.Code;
+                    var regionList = _repository.GetRegions(patientCountry);
 
-                _repository.Create(new_patient);
-                _repository.SaveChanges();    
+                    if (regionList.Count != 0)
+{
+                        var patientRegion = regionList[0].Name; // Gets the first Region --> No complications
+                        DateTime patientDoB;
+                        try
+                        {
+                            //2. Cast Date
+                            patientDoB = DateTime.Parse(patient.FechaNacimiento);
+                        } catch(System.FormatException)
+                        {
+                            patientDoB = DateTime.Today;
+                        }
+                            //3. Name se va como Tal
+                            var patientName = patient.Nombre;
+                            //4. Identificacion juega
+                            var patientDni = patient.Identificación;
+
+                            var new_patient = new Patient()
+                            {
+                                Dni = patientDni,
+                                Name = patientName,
+                                LastName = "",
+                                DoB = patientDoB,
+                                Status = 2, // INFECTED
+                                Hospital_Id = 8, //  Default Hospital
+                                Region = patientRegion,
+                                Country = patientCountry
+                            };
+
+                            //_repository.CreatePatient(new_patient);
+                            //_repository.SaveChanges(); 
+                            correctPatients.Add(new_patient);
+                        
+                    }
+                }
             }
 
-            return Ok(patientsList);
-        }*/
+            return Ok(correctPatients);
+        }
 
 
     }

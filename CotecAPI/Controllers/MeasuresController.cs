@@ -77,7 +77,7 @@ namespace CotecAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/v1/measures/sanitary")]
-        public ActionResult<IEnumerable<MeasureView>> GetSanitaryMeasuresv2([FromQuery] string CountryCode)
+        public ActionResult<IEnumerable<MeasureView>> GetActiveSanitaryMeasures([FromQuery] string CountryCode)
         {
             var measures = _repository.GetActiveSanitaryMeasuresByCountry(CountryCode);
             if(measures!= null)

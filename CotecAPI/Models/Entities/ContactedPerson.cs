@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace CotecAPI.Models.Entities
 {
@@ -20,7 +22,12 @@ namespace CotecAPI.Models.Entities
 
         
         // Many-to-many relationships
+        [JsonIgnore] 
+        [IgnoreDataMember] 
         public virtual ICollection<PersonPathologies> Pathologies { get; set; }
+
+        [JsonIgnore] 
+        [IgnoreDataMember] 
         public virtual ICollection<PersonsContactedByPatient> ContactedPatients { get; set;}
    
     }

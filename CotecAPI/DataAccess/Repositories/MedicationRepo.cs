@@ -124,6 +124,16 @@ namespace CotecAPI.DataAccess.Repositories
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dni"></param>
+        public void DeleteAllPatientMedications(string Dni)
+        {
+            var medications = _context.PatientMedications.Where(m => m.PatientDni == Dni).ToList();
+            _context.PatientMedications.RemoveRange(medications);
+        }
+
+        /// <summary>
         /// Saves all changes made to the database after a transaction.
         /// </summary>
         /// <returns>True if the changes were saved successfully, false if an error occurs.</returns>

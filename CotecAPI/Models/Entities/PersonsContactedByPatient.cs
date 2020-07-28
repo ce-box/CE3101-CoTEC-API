@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace CotecAPI.Models.Entities
 {
@@ -12,6 +14,9 @@ namespace CotecAPI.Models.Entities
         public virtual Patient Patient { get; set; }
         
         public string ContactDni { get; set; }
+        
+        [JsonIgnore] 
+        [IgnoreDataMember] 
         public virtual ContactedPerson Contacted { get; set; }
     }
 }

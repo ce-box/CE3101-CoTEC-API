@@ -155,9 +155,17 @@ namespace CotecAPI.Controllers
         /// <returns>Detail of the assigned medications.</returns>
         [HttpPost]
         [Route("api/v1/medications/patient/assign/list")]
-        public ActionResult<IEnumerable<PatientMedications>> AssignMedications([FromBody] IEnumerable<PatientMedications> p_med) 
+        public ActionResult<IEnumerable<PatientMedications>> AssignMedications([FromBody] List<PatientMedications> p_med) 
         {
-            _repository.AssociateMedications(p_med);
+            foreach (var medication in p_med)
+                {
+                    _repository.DeleteAllPatientMedications(medication.PatientDni);
+            }
+
+            if(p_med.Count > 0)
+            {    
+                _repository.AssociateMedications(p_med);
+            }
             _repository.SaveChanges();
 
             return Created("https://cotecapi.com/medications",p_med);

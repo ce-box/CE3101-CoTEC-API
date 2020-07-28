@@ -35,6 +35,7 @@ namespace CotecAPI
             services.AddControllers().AddNewtonsoftJson(
                 s =>  {
                     s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
             // Customize our CORS policy
