@@ -2,14 +2,14 @@ USE COTEC_DB;
 GO
 
 -- Delete Pathologies
-CREATE TRIGGER [DeletePathologies]
+CREATE OR ALTER TRIGGER [DeletePathologies]
 ON Pathologies
 INSTEAD OF DELETE
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @pathology INT
+    DECLARE @pathology varchar(50)
 
     SELECT @pathology = d.Name
     FROM deleted d;

@@ -10,8 +10,8 @@ namespace CotecAPI.Models.Profiles
         {
             // Source -> Target
             CreateMap<PatientStatus, StatusReadDTO>();
-            CreateMap<PatientStatus, StatusDTO>();
-            CreateMap<StatusDTO, PatientStatus>();
+            CreateMap<PatientStatus, StatusUpdateDTO>();
+            CreateMap<StatusUpdateDTO, PatientStatus>();
         }
     }
 }

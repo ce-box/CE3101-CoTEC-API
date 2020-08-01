@@ -1,7 +1,8 @@
 namespace CotecAPI.Models.DTO
 {
-    public class StatusDTO
+    public class CountryReadDTO
     {
         public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

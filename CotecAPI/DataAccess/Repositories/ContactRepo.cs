@@ -13,55 +13,118 @@ namespace CotecAPI.DataAccess.Repositories
     {
         private readonly CotecContext _context;
 
-        // Inject the Data Base Context
+        // Injects the Data Base Context
         public ContactRepo(CotecContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Add a new contact to the database.
+        /// </summary>
+        /// <param name="contact">Contact to be added.</param>
+        /// <returns> void </returns>
         public void CreateContact(ContactedPerson contact)
-        {       
-            _context.ContactedPersons.Add(contact);
+        {    
+            try
+            {
+                _context.ContactedPersons.Add(contact);
+            }
+            catch(DbUpdateException e)
+            { 
+                var sqlException = e.GetBaseException() as SqlException;
+                Console.Write("Problem Creating Patient\nExeption: "+ sqlException.ToString()); 
+            }
         }
 
-        public void CreateContactRelationship(string p_Dni, string c_Dni)
+        /// <summary>
+        /// Assign a contact to a patient's contact list.
+        /// </summary>
+        /// <param name="patientDni">Patient identity number.</param>
+        /// <param name="contactDni">Contact identity number.</param>
+        /// <returns> void </returns>
+        public void AssignContact(string patientDni, string contactDni)
         {
-            var relationship = new PersonsContactedByPatient() {PatientDni=p_Dni,ContactDni= c_Dni,MeetingDate=DateTime.Parse("2020-01-01")};
+            var relationship = new PersonsContactedByPatient() {PatientDni=patientDni,ContactDni= contactDni,MeetingDate=DateTime.Parse("2020-01-01")};
             _context.ContactedByPacients.Add(relationship);
         }
 
-        public ContactedPerson Exist(string Dni)
+        /// <summary>
+        /// Check if there is a contact in the database with a given Dni associated with a specific patient.
+        /// </summary>
+        /// <param name="patientDni">Patient identity number.</param>
+        /// <param name="contactDni">Contact identity number.</param>
+        /// <returns>If it exists, it returns the Object, otherwise it returns null.</returns>
+        public ContactedPerson ExistContactedPerson(string contactDni)
         {
-            return _context.ContactedPersons.FirstOrDefault(c => c.Dni == Dni);
+            return _context.ContactedPersons
+                           .FirstOrDefault(c => c.Dni == contactDni);
         }
 
-        public PersonsContactedByPatient Exist(string pDni,string cDni)
+        /// <summary>
+        /// Check if there is a contact in the database with a given Dni associated with a specific patient.
+        /// </summary>
+        /// <param name="patientDni">Patient identity number.</param>
+        /// <param name="contactDni">Contact identity number.</param>
+        /// <returns>If it exists, it returns the Object, otherwise it returns null.</returns>
+        public PersonsContactedByPatient ExitsRegisteredContact(string patientDni,string contactDni)
         {
-            return _context.ContactedByPacients.FirstOrDefault(c => c.ContactDni == cDni && c.PatientDni == pDni);
+            return _context.ContactedByPacients
+                           .FirstOrDefault(
+                               c => c.ContactDni == contactDni && 
+                               c.PatientDni == patientDni);
         }
 
-        public ContactView GetByDni(string Dni)
+        /// <summary>
+        /// A person obtains giving his Dni.
+        /// </summary>
+        /// <param name="contactDni">Contact identity number.</param>
+        /// <returns>Contact view instance</returns>
+        public ContactView GetContactByDni(string contactDni)
         {
-            var param = new SqlParameter("@contactDni",Dni); 
-            var contact =  _context.Set<ContactView>().FromSqlRaw($"EXEC [ContactSummary] @contactDni={Dni}").ToList();
+            var param = new SqlParameter("@contactDni",contactDni); 
+            var contact =  _context.Set<ContactView>()
+                                   .FromSqlRaw($"EXEC [ContactSummary] @contactDni={contactDni}")
+                                   .ToList();
             return contact[0];
         }
 
-        public IEnumerable<ContactView> GetPatientContact(string p_Dni)
+        /// <summary>
+        /// Get all the contacts associated with a patient.
+        /// </summary>
+        /// <param name="patientDni">Patient identity number.</param>
+        /// <returns>Contact view instance List</returns>
+        public IEnumerable<ContactView> GetPatientContacts(string patientDni)
         {
-            var contacts = _context.Set<ContactView>().FromSqlRaw($"EXEC [GetContacts] @patientDni={p_Dni}").ToList();
+            var contacts = _context.Set<ContactView>()
+                                   .FromSqlRaw($"EXEC [GetContacts] @patientDni={patientDni}")
+                                   .ToList();
             return contacts;
         }
 
-        public void Update(ContactedPerson contact)
+        /// <summary>
+        /// Update a contact's information.
+        /// </summary>
+        /// <param name="contact">Contact to update</param>
+        public void UpdateContact(ContactedPerson contact)
         {
-            // Nothing
+            // The method should not be implemented
         }
 
-        public void Delete(ContactedPerson contact)
+        /// <summary>
+        /// Delete a contact from the database.
+        /// </summary>
+        /// <param name="contact">Contact to delete.</param>
+        public void DeleteContact(ContactedPerson contact)
         {
-            _context.ContactedPersons.Remove(contact);
+            var param = new SqlParameter("@ContactDni",contact.Dni); 
+            _context.Database.ExecuteSqlRaw("deleteContact @ContactDni",param);
         }
+
+        /// <summary>
+        /// Saves all changes made to the database after a transaction.
+        /// </summary>
+        /// <returns>True if the changes were saved successfully, false if an error occurs.</returns>
         public bool SaveChanges()
         {
             return ( _context.SaveChanges() >= 0);

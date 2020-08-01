@@ -31,10 +31,10 @@ namespace CotecAPI.Controllers
 
         [HttpGet]
         [Route("api/v1/countries/all")]
-        public ActionResult<IEnumerable<CountryDTO>> GetCountryList()
+        public ActionResult<IEnumerable<CountryReadDTO>> GetCountryList()
         {
             var countryList = _repository.GetCountries();
-            return Ok(_mapper.Map<IEnumerable<CountryDTO>>(countryList));
+            return Ok(_mapper.Map<IEnumerable<CountryReadDTO>>(countryList));
         }
 
         [HttpPost]
