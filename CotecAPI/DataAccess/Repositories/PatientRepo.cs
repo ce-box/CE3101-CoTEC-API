@@ -56,7 +56,8 @@ namespace CotecAPI.DataAccess.Repositories
         /// <param name="Dni"> Patient Dni.</param>
         public void DeletePatient(string Dni)
         {
-            _context.Database.ExecuteSqlRaw($"DELETE FROM Patients WHERE Dni={Dni}");
+            var param = new SqlParameter("@PatientDni",Dni); 
+            _context.Database.ExecuteSqlRaw("deletePatient @PatientDni",param);
         }
 
         /// <summary>

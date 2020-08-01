@@ -174,8 +174,8 @@ namespace CotecAPI.Controllers
                                 Country = patientCountry
                             };
 
-                            //_repository.CreatePatient(new_patient);
-                            //_repository.SaveChanges(); 
+                            _repository.CreatePatient(new_patient);
+                            _repository.SaveChanges(); 
                             correctPatients.Add(new_patient);
                         
                     }

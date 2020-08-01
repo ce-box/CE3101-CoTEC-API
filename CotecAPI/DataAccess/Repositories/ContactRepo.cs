@@ -117,7 +117,8 @@ namespace CotecAPI.DataAccess.Repositories
         /// <param name="contact">Contact to delete.</param>
         public void DeleteContact(ContactedPerson contact)
         {
-            _context.ContactedPersons.Remove(contact);
+            var param = new SqlParameter("@ContactDni",contact.Dni); 
+            _context.Database.ExecuteSqlRaw("deleteContact @ContactDni",param);
         }
 
         /// <summary>

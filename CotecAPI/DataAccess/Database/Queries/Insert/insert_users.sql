@@ -52,3 +52,25 @@ VALUES
 UPDATE Countries 
 SET Name = 'United States'
 WHERE Code = 'USA';
+
+DELETE Patients
+WHERE Name IN (
+    'Gary Welch',
+    'Maxwell T. Stanton',
+    'Kenyon Acevedo',
+    'Howard Valentine',
+    'Prince, Kadeem Y.',
+    'Velasquez, Craig V.',
+    'Isabelle Turner',
+    'Hale, Cally Z.',
+    'Seth Barr',
+    'Rafael Lynch',
+    'Upton Z. Dominguez',
+    'Randall Vazquez',
+    'Sebastian Mclaughlin',
+    'Bradley Hernandez',
+    'Kirsten Burch',
+    'Clayton J. Stafford'
+)
+
+SELECT * FROM Patients WHERE Hospital_Id=8;
