@@ -92,6 +92,15 @@ namespace CotecAPI.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("api/v1/patients/crc")] // Patients in hospital
+        public ActionResult<IEnumerable<PatientView>> GetAllCRPatients()
+        {
+            var patientItem = _repository.GetCrPatients();
+            return Ok(patientItem);
+        }
+
+
         [HttpPatch]
         [Route("api/v1/patients/edit")]
         public ActionResult UpdatePatient([FromQuery] string Dni, JsonPatchDocument<PatientUpdateDTO> patchDoc)

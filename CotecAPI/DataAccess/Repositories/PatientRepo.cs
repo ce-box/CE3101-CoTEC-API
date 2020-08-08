@@ -95,6 +95,15 @@ namespace CotecAPI.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Returns a list of patients tha  lives in Costa Rica to sync  with HospitalMS  Database
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ExportPatient> GetCrPatients(){
+            var patients = _context.Set<ExportPatient>().FromSqlRaw("CrcPatients").ToList();
+            return patients;
+        }
+
+        /// <summary>
         /// Update properties of a patient. If your status changes to RECOVERED or DEAD, 
         /// a new event associated with the patient's country is entered.
         /// </summary>
